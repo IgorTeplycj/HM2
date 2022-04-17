@@ -44,12 +44,20 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("invalid opration move complited");
             }
-            catch
+            catch(Exception ex)
             {
+                if(ex.Message == "invalid operation move complited")
+                {
+                    Assert.Fail();
+                }
+                else
+                {
 
+                }
             }
+
         }
 
         [Test]
@@ -63,11 +71,18 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("invalid opration move complited");
             }
-            catch
+            catch (Exception ex)
             {
+                if (ex.Message == "invalid operation move complited")
+                {
+                    Assert.Fail();
+                }
+                else
+                {
 
+                }
             }
         }
 
@@ -82,11 +97,18 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("invalid opration move complited");
             }
-            catch
+            catch (Exception ex)
             {
+                if (ex.Message == "invalid operation move complited")
+                {
+                    Assert.Fail();
+                }
+                else
+                {
 
+                }
             }
         }
 
@@ -101,11 +123,18 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("invalid opration move complited");
             }
-            catch
+            catch (Exception ex)
             {
+                if (ex.Message == "invalid operation move complited")
+                {
+                    Assert.Fail();
+                }
+                else
+                {
 
+                }
             }
         }
 
@@ -118,11 +147,18 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("invalid opration move complited");
             }
-            catch
+            catch (Exception ex)
             {
+                if (ex.Message == "invalid operation move complited")
+                {
+                    Assert.Fail();
+                }
+                else
+                {
 
+                }
             }
         }
 
@@ -164,11 +200,18 @@ namespace HM2.Tests
             try
             {
                 rot.Execute();
-                Assert.Fail();
+                throw new Exception("invalid opration move complited");
             }
-            catch
+            catch (Exception ex)
             {
+                if (ex.Message == "invalid operation move complited")
+                {
+                    Assert.Fail();
+                }
+                else
+                {
 
+                }
             }
         }
 
@@ -189,11 +232,18 @@ namespace HM2.Tests
             try
             {
                 rot.Execute();
-                Assert.Fail();
+                throw new Exception("invalid opration move complited");
             }
-            catch
+            catch (Exception ex)
             {
+                if (ex.Message == "invalid operation move complited")
+                {
+                    Assert.Fail();
+                }
+                else
+                {
 
+                }
             }
         }
 
