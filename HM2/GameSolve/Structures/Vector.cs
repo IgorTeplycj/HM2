@@ -77,12 +77,12 @@ namespace HM2.GameSolve.Structures
             return newPos;
         }
     }
-
     public struct Vector
     {
         public Coordinats PositionNow { get; set; }
         public Coordinats Shift { get; set; }
         public VelosityVect @VelosityVect { get; set; }
+        public int VolumeFuel { get; set; }
 
         public int Direction { get; set; }
         public int DirectionNumber { get; set; }

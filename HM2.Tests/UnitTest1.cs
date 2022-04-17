@@ -44,11 +44,14 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("Invalid command was complited");
             }
-            catch
+            catch(Exception ex)
             {
-
+                if(ex.Message == "Invalid command was complited")
+                {
+                    Assert.Fail();
+                }
             }
         }
 
@@ -63,11 +66,14 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("Invalid command was complited");
             }
-            catch
+            catch (Exception ex)
             {
-
+                if (ex.Message == "Invalid command was complited")
+                {
+                    Assert.Fail();
+                }
             }
         }
 
@@ -82,11 +88,14 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("Invalid command was complited");
             }
-            catch
+            catch (Exception ex)
             {
-
+                if (ex.Message == "Invalid command was complited")
+                {
+                    Assert.Fail();
+                }
             }
         }
 
@@ -101,11 +110,14 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("Invalid command was complited");
             }
-            catch
+            catch (Exception ex)
             {
-
+                if (ex.Message == "Invalid command was complited")
+                {
+                    Assert.Fail();
+                }
             }
         }
 
@@ -118,11 +130,14 @@ namespace HM2.Tests
             try
             {
                 move.Execute();
-                Assert.Fail();
+                throw new Exception("Invalid command was complited");
             }
-            catch
+            catch (Exception ex)
             {
-
+                if (ex.Message == "Invalid command was complited")
+                {
+                    Assert.Fail();
+                }
             }
         }
 
@@ -164,11 +179,14 @@ namespace HM2.Tests
             try
             {
                 rot.Execute();
-                Assert.Fail();
+                throw new Exception("Invalid command was complited");
             }
-            catch
+            catch (Exception ex)
             {
-
+                if (ex.Message == "Invalid command was complited")
+                {
+                    Assert.Fail();
+                }
             }
         }
 
@@ -189,11 +207,14 @@ namespace HM2.Tests
             try
             {
                 rot.Execute();
-                Assert.Fail();
+                throw new Exception("Invalid command was complited");
             }
-            catch
+            catch (Exception ex)
             {
-
+                if (ex.Message == "Invalid command was complited")
+                {
+                    Assert.Fail();
+                }
             }
         }
 
