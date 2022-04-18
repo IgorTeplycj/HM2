@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace HM2.Tests.Mock
 {
-    public class MovableMock : Movable
+    public class Moving : IAction
     {
-        public MovableMock(Vector v)
+        public Moving(Vector v)
         {
             CurrentVector = v;
         }

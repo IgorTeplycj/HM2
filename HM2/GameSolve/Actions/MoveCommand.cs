@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace HM2.GameSolve.Actions
 {
-    public class Move
+    public class MoveCommand : ICommand
     {
-        Movable _movable;
-        public Move(Movable movable)
+        IAction _movable;
+        public MoveCommand(IAction movable)
         {
             _movable = movable;
         }
@@ -19,7 +19,7 @@ namespace HM2.GameSolve.Actions
         public void Execute()
         {
             if (this._movable == null)
-                throw new Exception("Объект, реализующий интерфейс Movable, не определен.");
+                throw new Exceptions.CommandException();
 
             _movable.Set(this._movable.CurrentVector.Add(this._movable.CurrentVector));
         }

@@ -7,7 +7,7 @@ using System;
 
 namespace HM2.Tests
 {
-    public class Tests
+    public class MovingRotateTests
     {
         [SetUp]
         public void Setup()
@@ -21,12 +21,12 @@ namespace HM2.Tests
             Vector vectBef = new Vector();
             vectBef.PositionNow = new Coordinats { X = 12.0, Y = 5.0 };
             vectBef.Shift = new Coordinats { X = -7.0, Y = 3.0 };
-            Movable movable = new MovableMock(vectBef);
+            IAction movable = new Moving(vectBef);
 
             Assert.AreEqual(movable.CurrentVector.PositionNow.X, 12.0);
             Assert.AreEqual(movable.CurrentVector.PositionNow.Y, 5.0);
 
-            Move move = new Move(movable);
+            MoveCommand move = new MoveCommand(movable);
             move.Execute();
 
             Assert.AreEqual(movable.CurrentVector.PositionNow.X, 5.0);
@@ -38,17 +38,17 @@ namespace HM2.Tests
         {
             Vector vectBef = new Vector();
             vectBef.PositionNow = new Coordinats { X = double.NaN, Y = 0.0 };
-            Movable movable = new MovableMock(vectBef);
+            IAction movable = new Moving(vectBef);
 
-            Move move = new Move(movable);
+            MoveCommand move = new MoveCommand(movable);
             try
             {
                 move.Execute();
                 throw new Exception("Invalid command was complited");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                if(ex.Message == "Invalid command was complited")
+                if (ex.Message == "Invalid command was complited")
                 {
                     Assert.Fail();
                 }
@@ -60,9 +60,9 @@ namespace HM2.Tests
         {
             Vector vectBef = new Vector();
             vectBef.PositionNow = new Coordinats { X = double.PositiveInfinity, Y = 0.0 };
-            Movable movable = new MovableMock(vectBef);
+            IAction movable = new Moving(vectBef);
 
-            Move move = new Move(movable);
+            MoveCommand move = new MoveCommand(movable);
             try
             {
                 move.Execute();
@@ -82,9 +82,9 @@ namespace HM2.Tests
         {
             Vector vectBef = new Vector();
             vectBef.PositionNow = new Coordinats { X = 0.0, Y = double.NaN };
-            Movable movable = new MovableMock(vectBef);
+            IAction movable = new Moving(vectBef);
 
-            Move move = new Move(movable);
+            MoveCommand move = new MoveCommand(movable);
             try
             {
                 move.Execute();
@@ -104,9 +104,9 @@ namespace HM2.Tests
         {
             Vector vectBef = new Vector();
             vectBef.PositionNow = new Coordinats { X = 0.0, Y = double.PositiveInfinity };
-            Movable movable = new MovableMock(vectBef);
+            IAction movable = new Moving(vectBef);
 
-            Move move = new Move(movable);
+            MoveCommand move = new MoveCommand(movable);
             try
             {
                 move.Execute();
@@ -124,9 +124,9 @@ namespace HM2.Tests
         [Test]
         public void NotShiftObject()
         {
-            Movable movable = null;
+            IAction movable = null;
 
-            Move move = new Move(movable);
+            MoveCommand move = new MoveCommand(movable);
             try
             {
                 move.Execute();
@@ -150,8 +150,8 @@ namespace HM2.Tests
             vectBef.Direction = 15;
             vectBef.DirectionNumber = 24;
 
-            Movable movable = new MovableMock(vectBef);
-            Rotate rot = new Rotate(movable);
+            IAction movable = new Moving(vectBef);
+            RotateCommand rot = new RotateCommand(movable);
 
             Assert.AreEqual(movable.CurrentVector.Direction, 15);
 
@@ -171,8 +171,8 @@ namespace HM2.Tests
             vectBef.Direction = 15;
             vectBef.DirectionNumber = 24;
 
-            Movable movable = new MovableMock(vectBef);
-            Rotate rot = new Rotate(movable);
+            IAction movable = new Moving(vectBef);
+            RotateCommand rot = new RotateCommand(movable);
 
             Assert.AreEqual(movable.CurrentVector.Direction, 15);
 
@@ -199,8 +199,8 @@ namespace HM2.Tests
             vectBef.Direction = 15;
             vectBef.DirectionNumber = 24;
 
-            Movable movable = new MovableMock(vectBef);
-            Rotate rot = new Rotate(movable);
+            IAction movable = new Moving(vectBef);
+            RotateCommand rot = new RotateCommand(movable);
 
             Assert.AreEqual(movable.CurrentVector.Direction, 15);
 
@@ -217,6 +217,5 @@ namespace HM2.Tests
                 }
             }
         }
-
     }
 }

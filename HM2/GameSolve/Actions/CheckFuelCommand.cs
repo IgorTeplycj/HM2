@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace HM2.GameSolve.Actions
 {
-    public class CheckFuel
+    public class CheckFuelCommand : ICommand
     {
-        Movable fuel;
-        public CheckFuel(Movable _fuel)
+        IAction fuel;
+        public CheckFuelCommand(IAction _fuel)
         {
             fuel = _fuel;
         }
@@ -20,11 +20,11 @@ namespace HM2.GameSolve.Actions
         {
             HM2.GameSolve.Structures.Vector vector = fuel.CurrentVector;
 
-            if (vector.VolumeFuel <= 0)
+            vector.ModifVolumeFuel();
+
+            if (vector.VolumeFuel < 0)
                 throw new Exceptions.CommandException();
 
-            vector.VolumeFuel--;
-            fuel.Set(vector);
         }
     }
 }

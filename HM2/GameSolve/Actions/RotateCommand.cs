@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace HM2.GameSolve.Actions
 {
-    public class Rotate
+    public class RotateCommand : ICommand
     {
-        Movable rot;
-        public Rotate(Movable _rot)
+        IAction rot;
+        public RotateCommand(IAction _rot)
         {
             rot = _rot;
         }
