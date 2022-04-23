@@ -1,4 +1,5 @@
 ﻿using HM2.GameSolve.Structures;
+using HM2.IoCs;
 using System;
 
 namespace HM2
@@ -7,12 +8,7 @@ namespace HM2
     {
         static void Main(string[] args)
         {
-            Vector vect = new Vector();
-            vect.VelosityVectNow = new VelosityVect { Angular = 30, Velosity = 100 };
 
-            vect.VelosityVectModifer = new VelosityVect { Angular = 0, Velosity = 200 };
-
-            vect.ModifVelosityVect();
         }
     }
 }

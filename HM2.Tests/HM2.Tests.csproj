@@ -17,4 +17,8 @@
     <ProjectReference Include="..\HM2\HM2.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="IoCTests\" />
+  </ItemGroup>
+
 </Project>
