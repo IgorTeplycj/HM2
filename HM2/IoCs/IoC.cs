@@ -16,21 +16,28 @@ namespace HM2.IoCs
         {
             if (key.Contains("Registration"))
             {
-                string _key = (string)obj[0];
-                T val = (T)obj[1];
-
-                if (container.ContainsKey(_key))
-                    container.Remove(_key);
-
-                container.Add(_key, val);
-                return container[_key];
+                return Add((string)obj[0], (T)obj[1]);
             }
             else
             {
-                if (!container.ContainsKey(key))
-                    throw new IoCException();
-                return container[key];
+                return Get(key);
             }
+        }
+
+        static T Add(string key, T val)
+        {
+            if (container.ContainsKey(key))
+                container.Remove(key);
+
+            container.Add(key, val);
+            return container[key];
+        }
+
+        static T Get(string key)
+        {
+            if (!container.ContainsKey(key))
+                throw new IoCException();
+            return container[key];
         }
 
     }

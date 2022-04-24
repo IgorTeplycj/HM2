@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace HM2.Tests.Mock
 {
+
     public class Moving : IAction
     {
         public Moving(Vector v)

@@ -84,6 +84,40 @@ namespace HM2.Tests.IoCTests
             Assert.AreEqual(movable.CurrentVector.PositionNow.Y, 15.0);
         }
         /// <summary>
+        ////Тест регистрации двух разных команд
+        /// </summary>
+        [Test]
+        public void RegistrationTwoCommand()
+        {
+            Vector vect1 = new Vector();
+            vect1.PositionNow = new Coordinats { X = 12.0, Y = 5.0 };
+            vect1.Shift = new Coordinats { X = -7.0, Y = 3.0 };
+            vect1.AngularVelosity = 10;
+            vect1.Direction = 15;
+            vect1.DirectionNumber = 24;
+            IAction movRot = new Moving(vect1);
+            MoveCommand move = new MoveCommand(movRot);
+            RotateCommand rot = new RotateCommand(movRot);
+
+            //регистрация команды движения 
+            ICommand commandMove = IoC<ICommand>.Resolve("IoC.Registration", "command.move", move);
+            //регистрация команды поворота
+            ICommand commandRotate = IoC<ICommand>.Resolve("IoC.Registration", "command.rotate", rot);
+
+            commandMove.Execute();
+            Assert.AreEqual(movRot.CurrentVector.PositionNow.X, 5.0);
+            Assert.AreEqual(movRot.CurrentVector.PositionNow.Y, 8.0);
+            Assert.AreEqual(movRot.CurrentVector.AngularVelosity, 10);
+            Assert.AreEqual(movRot.CurrentVector.Direction, 15);
+            Assert.AreEqual(movRot.CurrentVector.DirectionNumber, 24);
+
+            commandRotate.Execute();
+            Assert.AreEqual(movRot.CurrentVector.PositionNow.X, 5.0);
+            Assert.AreEqual(movRot.CurrentVector.PositionNow.Y, 8.0);
+            Assert.AreEqual(movRot.CurrentVector.Direction, 1);
+        }
+
+        /// <summary>
         ////Тест контейнера при вызове ранее незарегестрированной команды
         /// </summary>
         [Test]
