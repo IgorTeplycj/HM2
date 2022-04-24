@@ -7,37 +7,31 @@ using System.Threading.Tasks;
 
 namespace HM2.IoCs
 {
-    class RegisterIoCCommand : ICommand
+    public class IoCException : Exception { }
+    public static class IoC<T>
     {
-        IDictionary<string, ICommand> _commCol;
-        string _key;
-        ICommand _command;
-        public RegisterIoCCommand(string key, ICommand command, IDictionary<string, ICommand> commCol)
-        {
-            _commCol = commCol;
-            _key = key;
-            _command = command;
-        }
-        public void Execute()
-        {
-            _commCol.Add(_key, _command);
-        }
-    }
-    public class IoC
-    {
-        IDictionary<string, ICommand> _ioc = new Dictionary<string, ICommand>();
+        static IDictionary<string, T> container = new Dictionary<string, T>();
 
-        public ICommand Resolve(string key, params object[] obj)
+        public static T Resolve(string key, params object[] obj)
         {
-            if (key.Contains("IoC.Register"))
+            if (key.Contains("Registration"))
             {
-                ICommand command = new RegisterIoCCommand((string)obj[0], (ICommand)obj[1], _ioc);
-                return command;
+                string _key = (string)obj[0];
+                T val = (T)obj[1];
+
+                if (container.ContainsKey(_key))
+                    container.Remove(_key);
+
+                container.Add(_key, val);
+                return container[_key];
             }
             else
             {
-                return _ioc[key];
+                if (!container.ContainsKey(key))
+                    throw new IoCException();
+                return container[key];
             }
         }
+
     }
 }
