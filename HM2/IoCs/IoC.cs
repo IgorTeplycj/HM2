@@ -11,7 +11,6 @@ namespace HM2.IoCs
     public static class IoC<T>
     {
         static IDictionary<string, T> container = new Dictionary<string, T>();
-
         public static T Resolve(string key, params object[] obj)
         {
             if (key.Contains("Registration"))
