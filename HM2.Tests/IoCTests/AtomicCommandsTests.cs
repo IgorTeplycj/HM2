@@ -49,6 +49,42 @@ namespace HM2.Tests.IoCTests
             Assert.AreEqual(movable.CurrentVector.PositionNow.Y, 11.0);
         }
         [Test]
+        public void RegistrationAndDeleteCommand()
+        {
+            Vector vectBef = new Vector();
+            vectBef.PositionNow = new Coordinats { X = 12.0, Y = 5.0 };
+            vectBef.Shift = new Coordinats { X = -7.0, Y = 3.0 };
+            IAction movable = new Moving(vectBef);
+
+            Assert.AreEqual(movable.CurrentVector.PositionNow.X, 12.0);
+            Assert.AreEqual(movable.CurrentVector.PositionNow.Y, 5.0);
+
+            MoveCommand move = new MoveCommand(movable);
+            //регистрация команды
+            ICommand commandMove = IoC<ICommand>.Resolve("IoC.Registration", "command.move", move);
+
+            //проверка отстутсвия измкнений после регистрации
+            Assert.AreEqual(movable.CurrentVector.PositionNow.X, 12.0);
+            Assert.AreEqual(movable.CurrentVector.PositionNow.Y, 5.0);
+
+            commandMove.Execute();
+
+            Assert.AreEqual(movable.CurrentVector.PositionNow.X, 5.0);
+            Assert.AreEqual(movable.CurrentVector.PositionNow.Y, 8.0);
+
+            //повторный вызов команды
+            IoC<ICommand>.Resolve("command.move").Execute();
+
+            //проверка изменений после вызова
+            Assert.AreEqual(movable.CurrentVector.PositionNow.X, -2.0);
+            Assert.AreEqual(movable.CurrentVector.PositionNow.Y, 11.0);
+
+            //удаление команды
+            ICommand deleteCommand = IoC<ICommand>.Resolve("IoC.Registration", "command.move", null);
+
+            Assert.AreEqual(deleteCommand, null);
+        }
+        [Test]
         public void TwoRegistrationCommand()
         {
             Vector vectBef = new Vector();
