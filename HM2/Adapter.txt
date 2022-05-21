@@ -1,0 +1,1 @@
+using System;namespace AdapterGenerated{public class HelloWorld{public string SayHello(){return "test";}}}
