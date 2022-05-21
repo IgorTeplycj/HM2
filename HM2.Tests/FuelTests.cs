@@ -11,10 +11,13 @@ namespace HM2.Tests
 {
     public class FuelTests
     {
+        /// <summary>
+        /// Setup
+        /// </summary>
         [SetUp]
         public void Setup()
         {
-
+            
         }
 
         [Test] 
