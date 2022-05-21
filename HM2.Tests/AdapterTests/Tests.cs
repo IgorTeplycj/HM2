@@ -121,7 +121,7 @@ namespace HM2.Tests.AdapterTests
                 return o.CurrentVector;
             };
             IoC<Func<UObject, Vector>>.Resolve("IoC.Registration", "Movable_position", getVect);
-
+            //Регистрация адаптера
             Func<UObject, IMovable> getAdapter = (o) =>
             {
                 IMovable movableAdapter = new MovableAdapter(o);
