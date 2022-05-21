@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HM2", "HM2\HM2.csproj", "{8
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HM2.Tests", "HM2.Tests\HM2.Tests.csproj", "{76C6ECA9-9018-4293-9265-90726B5A4133}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generators", "Generators\Generators.csproj", "{04AB55A1-B10D-4436-9A70-A8B130A81ED7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdapterGenerator", "AdapterGenerator\AdapterGenerator.csproj", "{357C47CD-E320-4D40-A720-44C4E041A335}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{76C6ECA9-9018-4293-9265-90726B5A4133}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76C6ECA9-9018-4293-9265-90726B5A4133}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76C6ECA9-9018-4293-9265-90726B5A4133}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04AB55A1-B10D-4436-9A70-A8B130A81ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04AB55A1-B10D-4436-9A70-A8B130A81ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04AB55A1-B10D-4436-9A70-A8B130A81ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04AB55A1-B10D-4436-9A70-A8B130A81ED7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{357C47CD-E320-4D40-A720-44C4E041A335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{357C47CD-E320-4D40-A720-44C4E041A335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{357C47CD-E320-4D40-A720-44C4E041A335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{357C47CD-E320-4D40-A720-44C4E041A335}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
