@@ -14,7 +14,7 @@ namespace HM2.Tests
         [SetUp]
         public void Setup()
         {
-
+            //тест
         }
 
         [Test] 

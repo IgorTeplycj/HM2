@@ -16,7 +16,7 @@ namespace HM2.IoCs
         static IDictionary<string, MyFunc> methods = new Dictionary<string, MyFunc>
         {
             ["Registration"] = Registration,
-            ["IoC.Registration"] = Registration
+            ["IoC.Registration"] = Registration,
         };
 
         public static T Resolve(string key, params object[] obj)
@@ -31,6 +31,7 @@ namespace HM2.IoCs
         {
             return Add((string)args[0], (T)args[1]);
         }
+
 
         static T Add(string key, T val)
         {
