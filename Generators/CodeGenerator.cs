@@ -29,27 +29,27 @@ namespace Generators
         {
             //Debugger.Launch();
 
-            var compilation = context.Compilation;
-            var imovableInterface = compilation.GetTypeByMetadataName("HM2.GameSolve.Interfaces.IMovable");
+            //var compilation = context.Compilation;
+            //var imovableInterface = compilation.GetTypeByMetadataName("HM2.GameSolve.Interfaces.IMovable");
 
-            string codeImovableInterface = context.Compilation.SyntaxTrees.Where(x => x.GetText().ToString().
-            Contains("interface IMovable")).ToList().First().GetText().ToString();
-            var cnt = codeImovableInterface.IndexOf('}');
-            string str = codeImovableInterface.Remove(0, codeImovableInterface.LastIndexOf('{') + 1);
-            str = str.Remove(str.IndexOf('}'));
+            //string codeImovableInterface = context.Compilation.SyntaxTrees.Where(x => x.GetText().ToString().
+            //Contains("interface IMovable")).ToList().First().GetText().ToString();
+            //var cnt = codeImovableInterface.IndexOf('}');
+            //string str = codeImovableInterface.Remove(0, codeImovableInterface.LastIndexOf('{') + 1);
+            //str = str.Remove(str.IndexOf('}'));
 
-            //Получение сигнатуры методов
-            List<string> methodsSign = str.Trim(Environment.NewLine.ToCharArray()).Split(Environment.NewLine.ToCharArray()).ToList().
-                Where(x => x.Contains(";")).ToList();
+            ////Получение сигнатуры методов
+            //List<string> methodsSign = str.Trim(Environment.NewLine.ToCharArray()).Split(Environment.NewLine.ToCharArray()).ToList().
+            //    Where(x => x.Contains(";")).ToList();
 
-            StringBuilder code = new StringBuilder();
-            code.Append(usingRef);
+            //StringBuilder code = new StringBuilder();
+            //code.Append(usingRef);
 
-            //Создание кода методов
-            foreach (var item in methodsSign)
-            {
-                string s = @$"HM2.IoCs.IoC<Func<HM2.MovableObject.UObject, HM2.GameSolve.Structures.Vector>>.Resolve({item}).Invoke(obj);";
-            }
+            ////Создание кода методов
+            //foreach (var item in methodsSign)
+            //{
+            //    string s = @$"HM2.IoCs.IoC<Func<HM2.MovableObject.UObject, HM2.GameSolve.Structures.Vector>>.Resolve({item}).Invoke(obj);";
+            //}
 
 
 
