@@ -6,8 +6,8 @@
 		<LangVersion>preview</LangVersion>
 	</PropertyGroup>
 
-	<!--<ItemGroup>
-		<ProjectReference Include="..\AdapterGenerator\AdapterGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-	</ItemGroup>-->
+	<ItemGroup>
+	  <ProjectReference Include="..\AdapterGenerator\AdapterGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"  />
+	</ItemGroup>
 
 </Project>
