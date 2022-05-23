@@ -17,8 +17,4 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Include="HM\HM2.csproj" />
-	</ItemGroup>
-
 </Project>
