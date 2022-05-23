@@ -1,4 +1,8 @@
-﻿using System;
+﻿using HM2.GameSolve.Interfaces;
+using HM2.GameSolve.Structures;
+using HM2.IoCs;
+using HM2.MovableObject;
+using System;
 
 namespace HM2
 {
@@ -6,7 +10,8 @@ namespace HM2
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+
         }
+
     }
 }
