@@ -48,7 +48,7 @@ namespace HM2.Tests.AdapterTests
             vect.PositionNow = new Coordinats { X = 12.0, Y = 5.0 };
             UObject obj = new UObject(vect);
             //Создание экземпляра адаптера
-            IMovable movableAdapter = new MovableAdapter(obj);
+            IMovable movableAdapter = new MovableAdapterNotAuto(obj);
             //получение вектора объекта
             Vector posNow = movableAdapter.getPosition();
 
@@ -73,7 +73,7 @@ namespace HM2.Tests.AdapterTests
 
             UObject obj = new UObject(vect);
             //Создание экземпляра адаптера
-            IMovable movableAdapter = new MovableAdapter(obj);
+            IMovable movableAdapter = new MovableAdapterNotAuto(obj);
             //получение вектора объекта
             Vector velosityVect = movableAdapter.getVelocity();
 
@@ -91,7 +91,7 @@ namespace HM2.Tests.AdapterTests
             vect.PositionNow = new Coordinats { X = 0.0, Y = 0.0 };
             UObject obj = new UObject(vect);
             //Создание экземпляра адаптера
-            IMovable movableAdapter = new MovableAdapter(obj);
+            IMovable movableAdapter = new MovableAdapterNotAuto(obj);
             //получение вектора объекта
             Vector posNow = movableAdapter.getPosition();
             Assert.AreEqual(0.0, posNow.PositionNow.X);
@@ -113,7 +113,7 @@ namespace HM2.Tests.AdapterTests
             //Регистрация адаптера
             Func<UObject, IMovable> getAdapter = (o) =>
             {
-                IMovable movableAdapter = new MovableAdapter(o);
+                IMovable movableAdapter = new MovableAdapterNotAuto(o);
                 return movableAdapter;
             };
             IoC<Func<UObject, IMovable>>.Resolve("IoC.Registration", "UObjectAdapter", getAdapter);
