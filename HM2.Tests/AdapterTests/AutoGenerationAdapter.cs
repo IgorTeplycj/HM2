@@ -41,7 +41,11 @@ namespace HM2.Tests.AdapterTests
             IoC<Func<UObject, Vector, Vector>>.Resolve("IoC.Registration", "setPosition", setVect);
 
             //Регистрация метода void Finish()
-
+            Action<UObject> finish = (o) =>
+            {
+                o.Dispose();
+            };
+            IoC<Action<UObject>>.Resolve("IoC.Registration", "Finish", finish);
 
             //Регистрация адаптера
             Func<UObject, IMovable> getAdapter = (o) =>
@@ -115,6 +119,38 @@ namespace HM2.Tests.AdapterTests
             Assert.AreEqual(velosityVect.DirectionNumber, dirNum);
             Assert.AreEqual(velosityVect.VelosityVectNow.Angular, anglr);
             Assert.AreEqual(velosityVect.VelosityVectNow.Velosity, vel);
+        }
+
+        [Test]
+        public void FinishedUObject()
+        {
+            const double vel = 0.0;
+            const double anglr = 0.0;
+            const int anglrVel = 10;
+            const int direction = 15;
+            const int dirNum = 24;
+
+            Vector vect = new Vector();
+            vect.AngularVelosity = anglrVel;
+            vect.Direction = direction;
+            vect.DirectionNumber = dirNum;
+            vect.VelosityVectNow = new VelosityVect { Velosity = vel, Angular = anglr };
+
+            UObject obj = new UObject(vect);
+            //Создание экземпляра адаптера
+            IMovable movableAdapter = IoC<Func<UObject, IMovable>>.Resolve("UObjectAdapter").Invoke(obj);
+
+            //Вызов деструктора UObject
+            try
+            {
+                movableAdapter.Finish();
+            }
+            catch (Exception ex)
+            {
+                if (ex.GetType().GetHashCode() != new NotImplementedException().GetType().GetHashCode())
+                    Assert.Fail();
+            }
+
         }
     }
 }

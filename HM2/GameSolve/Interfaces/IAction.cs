@@ -11,5 +11,7 @@ namespace HM2.GameSolve.Interfaces
     {
         Vector CurrentVector { get; set; }
         void Set(Vector newV);
+
+        void Finish();
     }
 }

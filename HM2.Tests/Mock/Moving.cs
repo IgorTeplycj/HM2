@@ -16,9 +16,16 @@ namespace HM2.Tests.Mock
             CurrentVector = v;
         }
         public Vector CurrentVector { get; set; }
+
+        public void Finish()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Set(Vector newV)
         {
             CurrentVector = newV;
         }
+
     }
 }
