@@ -24,7 +24,7 @@ namespace AdapterGenerator
 
         public void Execute(GeneratorExecutionContext context)
         {
-            //Debugger.Launch();
+           // Debugger.Launch();
 
             var compilation = context.Compilation;
             var imovableInterface = compilation.GetTypeByMetadataName("HM2.GameSolve.Interfaces.IMovable");
@@ -34,7 +34,7 @@ namespace AdapterGenerator
             var methods = GetMethods(codeImovableInterface);
             //Получение сигнатуры методов
 
-            
+
 
             StringBuilder code = new StringBuilder();
             code.Append(usingRef);
@@ -120,7 +120,7 @@ namespace AdapterGenerator
             }
             code.Append(parametersList.Trim(','));
             code.Append(") {");
-            code.Append(" return ");
+            
 
             if (parametersList.Trim(',') != "")
                 parametersList = "," + parametersList.Trim(',');
@@ -150,7 +150,16 @@ namespace AdapterGenerator
                 names += item;
             }
 
-            code.Append(@$"HM2.IoCs.IoC<Func<HM2.MovableObject.UObject{parametersTypes}, {returnTypes}>>.Resolve(""{GetNameMethod(method)}"").Invoke(obj{names});");
+            if (returnTypes != "void")
+            {
+                code.Append(" return ");
+                code.Append(@$"HM2.IoCs.IoC<Func<HM2.MovableObject.UObject{parametersTypes}, {returnTypes}>>.Resolve(""{GetNameMethod(method)}"").Invoke(obj{names});");
+            }
+            else
+            {
+                code.Append(@$"HM2.IoCs.IoC<Action<HM2.MovableObject.UObject{parametersTypes}>>.Resolve(""{GetNameMethod(method)}"").Invoke(obj{names});");
+            }
+
             code.Append("}");
             return code.ToString();
         }

@@ -32,12 +32,16 @@ namespace HM2.Tests.AdapterTests
             };
             IoC<Func<UObject, Vector>>.Resolve("IoC.Registration", "getVelocity", getVel);
 
+
             Func<UObject, Vector, Vector> setVect = (o, v) =>
             {
                 o.CurrentVector = v;
                 return o.CurrentVector;
             };
             IoC<Func<UObject, Vector, Vector>>.Resolve("IoC.Registration", "setPosition", setVect);
+
+            //Регистрация метода void Finish()
+
 
             //Регистрация адаптера
             Func<UObject, IMovable> getAdapter = (o) =>
