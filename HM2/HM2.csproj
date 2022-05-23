@@ -18,7 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="HM\HM2.csproj" />
+	  <None Include="HM2\HM2.csproj" />
 	</ItemGroup>
 
 </Project>
