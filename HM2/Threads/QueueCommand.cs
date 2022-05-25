@@ -99,6 +99,7 @@ namespace HM2.Threads
 
                 cycleIsRun = false;
                 ComplitedThread?.Invoke();
+                Thread.Sleep(10);
             });
             dataCommandQueue.Start();
         }
