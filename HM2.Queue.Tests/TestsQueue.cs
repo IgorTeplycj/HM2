@@ -64,11 +64,14 @@ namespace HM2.Queue.Tests
         [Test]
         public void TestEventStart()
         {
+            MockCommandDelay command1 = new MockCommandDelay(20); //команда заглушка
             QueueCommand queueCommand = new QueueCommand();
+            queueCommand.PushCommand(command1);
             //подписываемся на событие старта
             queueCommand.StartThread += StartThread;
 
             Assert.IsFalse(queueCommand.TaskIsRun);
+
             //создание управляющей команды на запуск очереди
             ICommand commandStart = new ControlCommand(queueCommand.Start);
             //отправка команды в очередь
@@ -78,7 +81,7 @@ namespace HM2.Queue.Tests
 
             void StartThread()
             {
-               // Assert.IsTrue(queueCommand.TaskIsRun);
+                Assert.IsTrue(queueCommand.TaskIsRun);
             }
         }
     }
