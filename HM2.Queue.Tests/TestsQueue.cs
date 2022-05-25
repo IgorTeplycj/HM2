@@ -84,5 +84,31 @@ namespace HM2.Queue.Tests
                 Assert.IsTrue(queueCommand.TaskIsRun);
             }
         }
+        /// <summary>
+        /// Тест остановки параллельной задачи
+        /// </summary>
+        [Test]
+        public void TestEventStop()
+        {
+            MockCommandDelay command1 = new MockCommandDelay(10); //команда заглушка
+            QueueCommand queueCommand = new QueueCommand();
+            queueCommand.PushCommand(command1);
+            //подписываемся на событие остановки цикла
+            queueCommand.ComplitedThread += StopThread;
+
+            Assert.IsFalse(queueCommand.TaskIsRun);
+
+            //создание управляющей команды на запуск очереди
+            ICommand commandStart = new ControlCommand(queueCommand.Start);
+            //отправка команды в очередь
+            queueCommand.PushCommand(commandStart);
+
+            Thread.Sleep(50);
+
+            void StopThread()
+            {
+                Assert.IsFalse(queueCommand.TaskIsRun);
+            }
+        }
     }
 }
