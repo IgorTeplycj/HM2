@@ -94,7 +94,10 @@ namespace HM2.Queue.Tests
             QueueCommand queueCommand = new QueueCommand();
             queueCommand.PushCommand(command1);
             //подписываемся на событие остановки цикла
-            queueCommand.ComplitedThread += StopThread;
+            queueCommand.ComplitedThread += () =>
+            {
+                Assert.IsFalse(queueCommand.TaskIsRun);
+            };
 
             Assert.IsFalse(queueCommand.TaskIsRun);
 
@@ -104,11 +107,7 @@ namespace HM2.Queue.Tests
             queueCommand.PushCommand(commandStart);
 
             Thread.Sleep(50);
-
-            void StopThread()
-            {
-                Assert.IsFalse(queueCommand.TaskIsRun);
-            }
         }
+
     }
 }
