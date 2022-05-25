@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HM2.Tests", "HM2.Tests\HM2.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdapterGenerator", "AdapterGenerator\AdapterGenerator.csproj", "{F9AB859C-8FBE-48F8-950A-87D131C16A30}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HM2.Queue.Tests", "HM2.Queue.Tests\HM2.Queue.Tests.csproj", "{4366C84C-0425-4178-B677-7D868DC05758}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F9AB859C-8FBE-48F8-950A-87D131C16A30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9AB859C-8FBE-48F8-950A-87D131C16A30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9AB859C-8FBE-48F8-950A-87D131C16A30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4366C84C-0425-4178-B677-7D868DC05758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4366C84C-0425-4178-B677-7D868DC05758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4366C84C-0425-4178-B677-7D868DC05758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4366C84C-0425-4178-B677-7D868DC05758}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
