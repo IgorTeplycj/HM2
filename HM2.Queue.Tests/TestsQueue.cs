@@ -64,22 +64,22 @@ namespace HM2.Queue.Tests
         [Test]
         public void TestEventStart()
         {
-            //QueueCommand queueCommand = new QueueCommand();
-            ////подписываемся на событие старта
-            //queueCommand.StartThread += StartThread;
+            QueueCommand queueCommand = new QueueCommand();
+            //подписываемся на событие старта
+            queueCommand.StartThread += StartThread;
 
-            //Assert.IsFalse(queueCommand.TaskIsRun);
-            ////создание управляющей команды на запуск очереди
-            //ICommand commandStart = new ControlCommand(queueCommand.Start);
-            ////отправка команды в очередь
-            //queueCommand.PushCommand(commandStart);
+            Assert.IsFalse(queueCommand.TaskIsRun);
+            //создание управляющей команды на запуск очереди
+            ICommand commandStart = new ControlCommand(queueCommand.Start);
+            //отправка команды в очередь
+            queueCommand.PushCommand(commandStart);
 
-            //Thread.Sleep(1000);
+            Thread.Sleep(1000);
 
-            // void StartThread()
-            //{
-            //    Assert.IsTrue(queueCommand.TaskIsRun);
-            //}
+            void StartThread()
+            {
+               // Assert.IsTrue(queueCommand.TaskIsRun);
+            }
         }
     }
 }
