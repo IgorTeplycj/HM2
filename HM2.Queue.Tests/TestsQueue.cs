@@ -157,40 +157,5 @@ namespace HM2.Queue.Tests
                 Assert.Fail();
             }
         }
-
-       // [Test]
-        public void TestEventComplited()
-        {
-            MockCommandDelay command1 = new MockCommandDelay(0);
-            MockCommandDelay command2 = new MockCommandDelay(0);
-            MockCommandDelay command3 = new MockCommandDelay(0);
-            MockCommandDelay command4 = new MockCommandDelay(0);
-            MockCommandDelay command5 = new MockCommandDelay(0);
-            MockCommandDelay command6 = new MockCommandDelay(0);
-
-            bool eventIsWorked = false;
-            QueueCommand queueCommand = new QueueCommand();
-            //queueCommand.ComplitedThread += () =>
-            //{
-            //    eventIsWorked = true;
-            //};
-
-            queueCommand.PushCommand(command1);
-            queueCommand.PushCommand(command2);
-            queueCommand.PushCommand(command3);
-            queueCommand.PushCommand(command4);
-            queueCommand.PushCommand(command5);
-            queueCommand.PushCommand(command6);
-
-            queueCommand.PushCommand(new ControlCommand(queueCommand.Start)); //Запуск очереди
-            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop)); //Остановка выполнения очереди команд
-
-            //Thread.Sleep(100);
-
-            //if (!eventIsWorked)
-            //{
-            //    Assert.Fail();
-            //}
-        }
     }
 }
