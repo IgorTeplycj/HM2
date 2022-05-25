@@ -99,15 +99,88 @@ namespace HM2.Queue.Tests
             Assert.IsFalse(command4.CommandIsComplited());
             Assert.IsFalse(command5.CommandIsComplited());
             Assert.IsFalse(command6.CommandIsComplited());
+
+            Assert.IsFalse(queueCommand.TaskIsRun);
         }
 
         /// <summary>
         /// Тест события старта
         /// </summary>
-        [Test] 
+        [Test]
         public void TestEventStart()
         {
+            MockCommandDelay command1 = new MockCommandDelay(10);
+            MockCommandDelay command2 = new MockCommandDelay(10);
+            MockCommandDelay command3 = new MockCommandDelay(10);
+            MockCommandDelay command4 = new MockCommandDelay(10);
+            MockCommandDelay command5 = new MockCommandDelay(10);
+            MockCommandDelay command6 = new MockCommandDelay(10);
 
+            bool eventIsWorked = false;
+            QueueCommand queueCommand = new QueueCommand();
+            queueCommand.StartThread += () =>
+            {
+                eventIsWorked = true;
+            };
+
+            queueCommand.PushCommand(command1);
+            queueCommand.PushCommand(command2);
+            queueCommand.PushCommand(command3);
+            queueCommand.PushCommand(command4);
+            queueCommand.PushCommand(command5);
+            queueCommand.PushCommand(command6);
+
+            queueCommand.PushCommand(new ControlCommand(queueCommand.Start)); //Запуск очереди
+
+            Thread.Sleep(65);
+
+            if(!eventIsWorked)
+            {
+                Assert.Fail();
+            }
+        }
+
+        [Test]
+        public void TestEventComplited()
+        {
+            MockCommandDelay command1 = new MockCommandDelay(10);
+            MockCommandDelay command2 = new MockCommandDelay(10);
+            MockCommandDelay command3 = new MockCommandDelay(10);
+            MockCommandDelay command4 = new MockCommandDelay(10);
+            MockCommandDelay command5 = new MockCommandDelay(10);
+            MockCommandDelay command6 = new MockCommandDelay(10);
+
+            bool eventIsWorked = false;
+            QueueCommand queueCommand = new QueueCommand();
+            queueCommand.ComplitedThread += () =>
+            {
+                eventIsWorked = true;
+            };
+
+            queueCommand.PushCommand(command1);
+            queueCommand.PushCommand(command2);
+            queueCommand.PushCommand(command3);
+            queueCommand.PushCommand(command4);
+            queueCommand.PushCommand(command5);
+            queueCommand.PushCommand(command6);
+
+            queueCommand.PushCommand(new ControlCommand(queueCommand.Start)); //Запуск очереди
+
+            Thread.Sleep(65);
+
+            if (eventIsWorked)
+            {
+                Assert.Fail();
+            }
+
+            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop)); //Остановка выполнения очереди команд
+
+            Thread.Sleep(2);
+
+            if (!eventIsWorked)
+            {
+                Assert.Fail();
+            }
         }
     }
 }
