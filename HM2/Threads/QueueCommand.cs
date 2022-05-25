@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 
 namespace HM2.Threads
 {
-    
     public class QueueCommand
     {
         Queue<ICommand> dataQueue;
@@ -68,7 +67,8 @@ namespace HM2.Threads
         }
         void SoftStopQueue()
         {
-            ICommand softStopedCommand = new ControlCommand(() => {
+            ICommand softStopedCommand = new ControlCommand(() =>
+            {
                 cycleIsRun = false;
             });
             dataQueue.Enqueue(softStopedCommand);
@@ -87,7 +87,7 @@ namespace HM2.Threads
                         dataQueue.Dequeue().Execute();
                 }
 
-                cycleIsRun = false;
+                //cycleIsRun = false;
                 ComplitedThread?.Invoke();
             });
             dataCommandQueue.Start();
