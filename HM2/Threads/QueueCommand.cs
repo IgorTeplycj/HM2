@@ -97,7 +97,6 @@ namespace HM2.Threads
                     }    
                 }
                 ComplitedThread?.Invoke();
-                Thread.Sleep(10);
             });
             dataCommandQueue.Start();
         }

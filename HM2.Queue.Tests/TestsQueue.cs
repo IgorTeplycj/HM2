@@ -152,10 +152,10 @@ namespace HM2.Queue.Tests
 
             bool eventIsWorked = false;
             QueueCommand queueCommand = new QueueCommand();
-            queueCommand.ComplitedThread += () =>
-            {
-                eventIsWorked = true;
-            };
+            //queueCommand.ComplitedThread += () =>
+            //{
+            //    eventIsWorked = true;
+            //};
 
             queueCommand.PushCommand(command1);
             queueCommand.PushCommand(command2);
