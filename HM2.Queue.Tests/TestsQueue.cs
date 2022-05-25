@@ -140,7 +140,7 @@ namespace HM2.Queue.Tests
             }
         }
 
-        //[Test]
+        [Test]
         public void TestEventComplited()
         {
             MockCommandDelay command1 = new MockCommandDelay(10);
@@ -175,7 +175,7 @@ namespace HM2.Queue.Tests
 
             queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop)); //Остановка выполнения очереди команд
 
-            Thread.Sleep(2);
+            Thread.Sleep(10);
 
             if (!eventIsWorked)
             {
