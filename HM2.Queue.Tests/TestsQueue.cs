@@ -88,7 +88,7 @@ namespace HM2.Queue.Tests
         /// “ест остановки параллельной задачи
         /// </summary>
         [Test]
-        public void TestEventStop()
+        public void TestEventSoftStop()
         {
             MockCommandDelay command1 = new MockCommandDelay(10); //команда заглушка
             QueueCommand queueCommand = new QueueCommand();
@@ -105,6 +105,7 @@ namespace HM2.Queue.Tests
             ICommand commandStart = new ControlCommand(queueCommand.Start);
             //отправка команды в очередь
             queueCommand.PushCommand(commandStart);
+            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop));
 
             Thread.Sleep(50);
         }
