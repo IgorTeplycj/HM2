@@ -68,8 +68,14 @@ namespace HM2.Queue.Tests
             QueueCommand queueCommand = new QueueCommand();
             queueCommand.PushCommand(command1);
             //подписываемся на событие старта
-            queueCommand.StartThread += StartThread;
-
+            queueCommand.StartThread += () =>
+            {
+                Assert.IsTrue(queueCommand.TaskIsRun);
+            };
+            queueCommand.ComplitedThread += () =>
+            {
+                Assert.IsFalse(queueCommand.TaskIsRun);
+            };
             Assert.IsFalse(queueCommand.TaskIsRun);
 
             //создание управляющей команды на запуск очереди
@@ -79,12 +85,8 @@ namespace HM2.Queue.Tests
 
             Thread.Sleep(30);
             queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop));
-
-            void StartThread()
-            {
-                Assert.IsTrue(queueCommand.TaskIsRun);
-                
-            }
+            Thread.Sleep(30);
+            Assert.IsFalse(queueCommand.TaskIsRun);
         }
         /// <summary>
         /// Тест остановки параллельной задачи
