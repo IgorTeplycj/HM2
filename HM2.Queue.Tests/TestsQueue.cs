@@ -78,10 +78,12 @@ namespace HM2.Queue.Tests
             queueCommand.PushCommand(commandStart);
 
             Thread.Sleep(30);
+            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop));
 
             void StartThread()
             {
                 Assert.IsTrue(queueCommand.TaskIsRun);
+                
             }
         }
         /// <summary>
