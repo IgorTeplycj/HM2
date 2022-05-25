@@ -116,11 +116,17 @@ namespace HM2.Queue.Tests
             MockCommandDelay command5 = new MockCommandDelay(10);
             MockCommandDelay command6 = new MockCommandDelay(10);
 
-            bool eventIsWorked = false;
+            bool eventStartIsWorked = false;
+            bool eventComplitedIsWorked = false;
+
             QueueCommand queueCommand = new QueueCommand();
             queueCommand.StartThread += () =>
             {
-                eventIsWorked = true;
+                eventStartIsWorked = true;
+            };
+            queueCommand.ComplitedThread += () =>
+            {
+                eventComplitedIsWorked = true;
             };
 
             queueCommand.PushCommand(command1);
@@ -134,21 +140,28 @@ namespace HM2.Queue.Tests
 
             Thread.Sleep(65);
 
-            if(!eventIsWorked)
+            if(!eventStartIsWorked)
             {
                 Assert.Fail();
             }
+            if (eventComplitedIsWorked)
+            {
+                Assert.Fail();
+            }
+
+            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop)); //Остановка выполнения очереди команд
+            Thread.Sleep(10);
         }
 
        // [Test]
         public void TestEventComplited()
         {
-            MockCommandDelay command1 = new MockCommandDelay(10);
-            MockCommandDelay command2 = new MockCommandDelay(10);
-            MockCommandDelay command3 = new MockCommandDelay(10);
-            MockCommandDelay command4 = new MockCommandDelay(10);
-            MockCommandDelay command5 = new MockCommandDelay(10);
-            MockCommandDelay command6 = new MockCommandDelay(10);
+            MockCommandDelay command1 = new MockCommandDelay(0);
+            MockCommandDelay command2 = new MockCommandDelay(0);
+            MockCommandDelay command3 = new MockCommandDelay(0);
+            MockCommandDelay command4 = new MockCommandDelay(0);
+            MockCommandDelay command5 = new MockCommandDelay(0);
+            MockCommandDelay command6 = new MockCommandDelay(0);
 
             bool eventIsWorked = false;
             QueueCommand queueCommand = new QueueCommand();
