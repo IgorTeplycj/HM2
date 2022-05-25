@@ -107,7 +107,7 @@ namespace HM2.Queue.Tests
         /// Тест события старта
         /// </summary>
         [Test]
-        public void TestEventStart()
+        public void TestEventStartAndComplited()
         {
             MockCommandDelay command1 = new MockCommandDelay(10);
             MockCommandDelay command2 = new MockCommandDelay(10);
@@ -150,7 +150,12 @@ namespace HM2.Queue.Tests
             }
 
             queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop)); //Остановка выполнения очереди команд
-            Thread.Sleep(10);
+            Thread.Sleep(5);
+
+            if (!eventComplitedIsWorked)
+            {
+                Assert.Fail();
+            }
         }
 
        // [Test]
