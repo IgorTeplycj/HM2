@@ -87,6 +87,7 @@ namespace HM2.Threads
                         dataQueue.Dequeue().Execute();
                 }
 
+                cycleIsRun = false;
                 ComplitedThread?.Invoke();
             });
             dataCommandQueue.Start();
