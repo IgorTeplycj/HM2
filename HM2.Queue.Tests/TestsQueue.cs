@@ -201,6 +201,22 @@ namespace HM2.Queue.Tests
             Assert.IsTrue(command9.CommandIsComplited());
 
             queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop)); //ќстановка выполнени€ очереди команд
+
+            //ѕроверка, что вновь добавленные команды не будут выполн€тс€ 
+
+            MockCommandDelay command10 = new MockCommandDelay(0);
+            MockCommandDelay command11 = new MockCommandDelay(0);
+            MockCommandDelay command12 = new MockCommandDelay(0);
+
+            queueCommand.PushCommand(command10);
+            queueCommand.PushCommand(command11);
+            queueCommand.PushCommand(command12);
+
+            Thread.Sleep(5);
+
+            Assert.IsFalse(command10.CommandIsComplited());
+            Assert.IsFalse(command11.CommandIsComplited());
+            Assert.IsFalse(command12.CommandIsComplited());
         }
     }
 }
