@@ -165,6 +165,7 @@ namespace HM2.Queue.Tests
             queueCommand.PushCommand(command6);
 
             queueCommand.PushCommand(new ControlCommand(queueCommand.Start)); //Запуск очереди
+            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop)); //Остановка выполнения очереди команд
 
             Thread.Sleep(65);
 
@@ -173,7 +174,6 @@ namespace HM2.Queue.Tests
                 //Assert.Fail();
             }
 
-            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop)); //Остановка выполнения очереди команд
 
             Thread.Sleep(10);
 
