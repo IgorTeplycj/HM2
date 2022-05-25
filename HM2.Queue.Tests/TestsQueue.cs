@@ -106,7 +106,7 @@ namespace HM2.Queue.Tests
         /// <summary>
         /// Тест события старта
         /// </summary>
-       // [Test]
+        [Test]
         public void TestEventStart()
         {
             MockCommandDelay command1 = new MockCommandDelay(10);
