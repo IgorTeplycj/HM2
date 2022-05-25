@@ -82,7 +82,7 @@ namespace HM2.Queue.Tests
             //отправка команды в очередь
             queueCommand.PushCommand(commandStart);
 
-            Thread.Sleep(600);
+            Thread.Sleep(2000);
 
              void StartThread()
             {
