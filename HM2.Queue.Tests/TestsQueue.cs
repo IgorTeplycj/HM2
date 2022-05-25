@@ -28,91 +28,86 @@ namespace HM2.Queue.Tests
             IoCs.IoC<Func<ICommand, bool>>.Resolve("IoC.Registration", "IsControlCommand", isControlCommand);
         }
 
-        /// <summary>
-        /// Тест запуска потока. Состояние запуска определяется исходя из признака выполнения MockCommand
-        /// </summary>
         [Test]
-        public void TestRunThread()
+        public void TestStartAndSoftStop()
         {
-            MockCommandDelay command1 = new MockCommandDelay(20);
-            MockCommandDelay command2 = new MockCommandDelay(20);
+            MockCommandDelay command1 = new MockCommandDelay(10);
+            MockCommandDelay command2 = new MockCommandDelay(10);
+            MockCommandDelay command3 = new MockCommandDelay(10);
+            MockCommandDelay command4 = new MockCommandDelay(10);
+            MockCommandDelay command5 = new MockCommandDelay(10);
+            MockCommandDelay command6 = new MockCommandDelay(10);
 
             QueueCommand queueCommand = new QueueCommand();
             queueCommand.PushCommand(command1);
             queueCommand.PushCommand(command2);
+            queueCommand.PushCommand(command3);
+            queueCommand.PushCommand(command4);
+            queueCommand.PushCommand(command5);
+            queueCommand.PushCommand(command6);
 
-            Thread.Sleep(50);
-            Assert.IsFalse(command1.CommandIsComplited());
-            Assert.IsFalse(command2.CommandIsComplited());
+            Assert.IsFalse(queueCommand.TaskIsRun);
+            //отправка команды в очередь
+            queueCommand.PushCommand(new ControlCommand(queueCommand.Start));
+            Thread.Sleep(2);
+            Assert.IsTrue(queueCommand.TaskIsRun);
+            Thread.Sleep(23);
+            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop));
+            Thread.Sleep(40);
 
-            //создание управляющей команды на запуск очереди
-            ICommand commandStart = new ControlCommand(queueCommand.Start);
-            queueCommand.PushCommand(commandStart);
-
-            Thread.Sleep(10);
-            Assert.IsFalse(command1.CommandIsComplited());
-            Thread.Sleep(11);
             Assert.IsTrue(command1.CommandIsComplited());
-
-            Assert.IsFalse(command2.CommandIsComplited());
-            Thread.Sleep(20);
             Assert.IsTrue(command2.CommandIsComplited());
+            Assert.IsTrue(command3.CommandIsComplited());
+            Assert.IsTrue(command4.CommandIsComplited());
+            Assert.IsTrue(command5.CommandIsComplited());
+            Assert.IsTrue(command6.CommandIsComplited());
+
+            Assert.IsFalse(queueCommand.TaskIsRun);
         }
         /// <summary>
-        /// Тест признака старта параллельной задачи
+        /// Тест жесткой остановки выполнения очереди команд
         /// </summary>
         [Test]
+        public void TestHardStop()
+        {
+            MockCommandDelay command1 = new MockCommandDelay(10);
+            MockCommandDelay command2 = new MockCommandDelay(10);
+            MockCommandDelay command3 = new MockCommandDelay(10);
+            MockCommandDelay command4 = new MockCommandDelay(10);
+            MockCommandDelay command5 = new MockCommandDelay(10);
+            MockCommandDelay command6 = new MockCommandDelay(10);
+
+            QueueCommand queueCommand = new QueueCommand();
+            queueCommand.PushCommand(command1);
+            queueCommand.PushCommand(command2);
+            queueCommand.PushCommand(command3);
+            queueCommand.PushCommand(command4);
+            queueCommand.PushCommand(command5);
+            queueCommand.PushCommand(command6);
+
+            Assert.IsFalse(queueCommand.TaskIsRun);
+
+            queueCommand.PushCommand(new ControlCommand(queueCommand.Start)); //Запуск очереди
+            Thread.Sleep(25); //приблизительное время выполнения двух команд заглушек
+            queueCommand.PushCommand(new ControlCommand(queueCommand.HardStop)); //Жесткий стоп очереди
+            Thread.Sleep(60);
+
+            Assert.IsTrue(command1.CommandIsComplited());
+            Assert.IsTrue(command2.CommandIsComplited());
+            Assert.IsTrue(command3.CommandIsComplited());
+
+            Assert.IsFalse(command4.CommandIsComplited());
+            Assert.IsFalse(command5.CommandIsComplited());
+            Assert.IsFalse(command6.CommandIsComplited());
+        }
+
+        /// <summary>
+        /// Тест события старта
+        /// </summary>
+        [Test] 
         public void TestEventStart()
         {
-            MockCommandDelay command1 = new MockCommandDelay(10); //команда заглушка
-            QueueCommand queueCommand = new QueueCommand();
-            queueCommand.PushCommand(command1);
-            //подписываемся на событие старта
-            queueCommand.StartThread += () =>
-            {
-                Assert.IsTrue(queueCommand.TaskIsRun);
-            };
-            queueCommand.ComplitedThread += () =>
-            {
-                Assert.IsFalse(queueCommand.TaskIsRun);
-            };
-            Assert.IsFalse(queueCommand.TaskIsRun);
 
-            //создание управляющей команды на запуск очереди
-            ICommand commandStart = new ControlCommand(queueCommand.Start);
-            //отправка команды в очередь
-            queueCommand.PushCommand(commandStart);
-
-            Thread.Sleep(30);
-            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop));
-            Thread.Sleep(30);
-            Assert.IsFalse(queueCommand.TaskIsRun);
         }
-        /// <summary>
-        /// Тест остановки параллельной задачи
-        /// </summary>
-        [Test]
-        public void TestEventSoftStop()
-        {
-            MockCommandDelay command1 = new MockCommandDelay(10); //команда заглушка
-            QueueCommand queueCommand = new QueueCommand();
-            queueCommand.PushCommand(command1);
-            //подписываемся на событие остановки цикла
-            queueCommand.ComplitedThread += () =>
-            {
-                Assert.IsFalse(queueCommand.TaskIsRun);
-            };
-
-            Assert.IsFalse(queueCommand.TaskIsRun);
-
-            //создание управляющей команды на запуск очереди
-            ICommand commandStart = new ControlCommand(queueCommand.Start);
-            //отправка команды в очередь
-            queueCommand.PushCommand(commandStart);
-            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop));
-
-            Thread.Sleep(50);
-        }
-
     }
 }

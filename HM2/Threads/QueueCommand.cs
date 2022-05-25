@@ -58,12 +58,19 @@ namespace HM2.Threads
         public Action SoftStop;
 
         public delegate void QueueHandler();
+        /// <summary>
+        /// Обработчик события завершения цикла
+        /// </summary>
         public event QueueHandler ComplitedThread;
+        /// <summary>
+        /// Оработчик события старта цикла 
+        /// </summary>
         public event QueueHandler StartThread;
 
         void HardStopQueue()
         {
             dataQueue.Clear();
+            cycleIsRun = false;
         }
         void SoftStopQueue()
         {
@@ -84,7 +91,10 @@ namespace HM2.Threads
                 while (cycleIsRun)
                 {
                     if (dataQueue.Count > 0)
+                    {
                         dataQueue.Dequeue().Execute();
+
+                    }    
                 }
 
                 cycleIsRun = false;
