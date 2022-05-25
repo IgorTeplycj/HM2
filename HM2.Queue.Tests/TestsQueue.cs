@@ -157,5 +157,50 @@ namespace HM2.Queue.Tests
                 Assert.Fail();
             }
         }
+
+        [Test]
+        public void TestRepeatedAddCommand()
+        {
+            MockCommandDelay command1 = new MockCommandDelay(0);
+            MockCommandDelay command2 = new MockCommandDelay(0);
+            MockCommandDelay command3 = new MockCommandDelay(0);
+            MockCommandDelay command4 = new MockCommandDelay(0);
+            MockCommandDelay command5 = new MockCommandDelay(0);
+            MockCommandDelay command6 = new MockCommandDelay(0);
+
+            QueueCommand queueCommand = new QueueCommand();
+            queueCommand.PushCommand(command1);
+            queueCommand.PushCommand(command2);
+            queueCommand.PushCommand(command3);
+            queueCommand.PushCommand(command4);
+            queueCommand.PushCommand(command5);
+            queueCommand.PushCommand(command6);
+
+            queueCommand.PushCommand(new ControlCommand(queueCommand.Start)); //Запуск очереди
+
+            Thread.Sleep(5);
+
+            Assert.IsTrue(command1.CommandIsComplited());
+            Assert.IsTrue(command2.CommandIsComplited());
+            Assert.IsTrue(command3.CommandIsComplited());
+            Assert.IsTrue(command4.CommandIsComplited());
+            Assert.IsTrue(command5.CommandIsComplited());
+            Assert.IsTrue(command6.CommandIsComplited());
+
+            MockCommandDelay command7 = new MockCommandDelay(0);
+            MockCommandDelay command8 = new MockCommandDelay(0);
+            MockCommandDelay command9 = new MockCommandDelay(0);
+
+            queueCommand.PushCommand(command7);
+            queueCommand.PushCommand(command8);
+            queueCommand.PushCommand(command9);
+            Thread.Sleep(5);
+
+            Assert.IsTrue(command7.CommandIsComplited());
+            Assert.IsTrue(command8.CommandIsComplited());
+            Assert.IsTrue(command9.CommandIsComplited());
+
+            queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop)); //Остановка выполнения очереди команд
+        }
     }
 }
