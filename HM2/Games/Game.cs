@@ -32,7 +32,7 @@ namespace HM2.Games
             {
                 return new MoveCommand(o);
             };
-            IoC<Func<UObject, ICommand>>.Resolve("IoC.Registration", "Движение по прямой", getCommandMove);
+            IoC<Func<UObject, ICommand>>.Resolve("IoC.Registration", "move line", getCommandMove);
 
             //создание команды поворота для игрового объекта
             Func<UObject, ICommand> getCommandRotate = (o) =>

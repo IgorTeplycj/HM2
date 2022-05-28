@@ -53,7 +53,7 @@ namespace HM2.Server.Tests
             obj.CurrentVector = vector;
 
             //получение команды движения по прямой
-            var moveCommand = IoC<Func<UObject, ICommand>>.Resolve("Движение по прямой").Invoke(obj);
+            var moveCommand = IoC<Func<UObject, ICommand>>.Resolve("move line").Invoke(obj);
 
             Assert.AreEqual(obj.CurrentVector.PositionNow.X, 0.0);
             Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 0.0);
