@@ -196,7 +196,10 @@ namespace HM2.GameSolve.Structures
                 double X = this.PositionNow.X;
                 double Y = this.PositionNow.Y;
 
-                return (this.Direction + this.AngularVelosity) % this.DirectionNumber;
+                if (this.DirectionNumber == 0)
+                    return 0;
+                else
+                   return (this.Direction + this.AngularVelosity) % this.DirectionNumber;
             }
         }
 

@@ -22,19 +22,13 @@ namespace HM2
     {
         static void Main(string[] args)
         {
-            Message message = new Message("Game12345", "GameObj12345", "124578", "GameArgs");
+            Vector vector = new Vector();
+            vector.Shift = new Coordinats { X = 5.0, Y = 7.0 };
+            vector.DirectionNumber = 1;
 
-            StringBuilder s = new StringBuilder();
+            var vr = JsonSerializer.Serialize<Vector>(vector);
 
-            SerializeMessageCommands serializeMessageCommands = new SerializeMessageCommands(message, s);
-            serializeMessageCommands.Execute();
-
-            Message message2 = new Message(null, null, null, null);
-            DeserializeMessageCommand deserializeMessageCommand = new DeserializeMessageCommand(message2, s);
-            deserializeMessageCommand.Execute();
-
-            Console.WriteLine(s);
-
+            var vextDes = JsonSerializer.Deserialize<Vector>(vr);
         }
     }
 }
