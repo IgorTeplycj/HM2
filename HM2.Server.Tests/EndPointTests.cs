@@ -42,7 +42,7 @@ namespace HM2.Server.Tests
             game.Create(3, 10);
         }
 
-        [Test]
+       // [Test]
         public void MoveObjectByClient()
         {
             //Выбираем игровой объект под номером 3 из игры номер 1. Им и будем управлять в игре.
