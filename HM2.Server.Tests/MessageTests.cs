@@ -10,14 +10,14 @@ namespace HM2.Server.Tests
 {
     public class MessageTests
     {
-       // [SetUp]
+        [SetUp]
         public void CreateGameObject()
         {
             Game game = new Game();
             //создаем три игры по 10 игровых объектов в каждой
             game.Create(3, 10);
         }
-       // [Test]
+        [Test]
         public void MessageTest()
         {
 
