@@ -7,7 +7,14 @@ using System.Threading.Tasks;
 
 namespace HM2.IoCs
 {
-    public class IoCException : Exception { }
+    public class IoCException : Exception
+    {
+        public IoCException() : base() { }
+        public IoCException(string massage) : base(massage)
+        {
+
+        }
+    }
     public static class IoC<T>
     {
         delegate T MyFunc(params object[] args);
@@ -44,7 +51,7 @@ namespace HM2.IoCs
         static T Get(string key)
         {
             if (!container.ContainsKey(key))
-                throw new IoCException();
+                throw new IoCException($"key {key} not found");
             return container[key];
         }
 
