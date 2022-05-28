@@ -53,7 +53,7 @@ namespace HM2.Server.Tests
             obj.CurrentVector = vector;
 
             //получение команды движения по прямой
-            var moveCommand = IoC<Func<UObject, ICommand>>.Resolve("move line").Invoke(obj);
+            var moveCommand = IoC<Func<UObject, ICommand>>.Resolve("Move line").Invoke(obj);
 
             Assert.AreEqual(obj.CurrentVector.PositionNow.X, 0.0);
             Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 0.0);
@@ -72,7 +72,7 @@ namespace HM2.Server.Tests
             Vector vector = new Vector();
             vector.Shift = new Coordinats { X = 5.0, Y = 7.0 };
 
-            Message message = new Message("1", "3", "Движение по прямой", JsonSerializer.Serialize<Vector>(vector));
+            Message message = new Message("1", "3", "Move line", JsonSerializer.Serialize<Vector>(vector));
         }
 
 

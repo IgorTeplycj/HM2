@@ -25,35 +25,35 @@ namespace HM2.Games
                 UObject uObject = new UObject(vect);
                 return uObject;
             };
-            IoC<createObj>.Resolve("IoC.Registration", "Создать игровой объект", createObj);
+            IoC<createObj>.Resolve("IoC.Registration", "Create game object", createObj);
 
             //создание команды движения для игрового объекта
             Func<UObject, ICommand> getCommandMove = (o) =>
             {
                 return new MoveCommand(o);
             };
-            IoC<Func<UObject, ICommand>>.Resolve("IoC.Registration", "move line", getCommandMove);
+            IoC<Func<UObject, ICommand>>.Resolve("IoC.Registration", "Move line", getCommandMove);
 
             //создание команды поворота для игрового объекта
             Func<UObject, ICommand> getCommandRotate = (o) =>
             {
                 return new RotateCommand(o);
             };
-            IoC<Func<UObject, ICommand>>.Resolve("IoC.Registration", "Поворот", getCommandRotate);
+            IoC<Func<UObject, ICommand>>.Resolve("IoC.Registration", "Rotate", getCommandRotate);
 
             //создание команды расхода топлива для игрового объекта
             Func<UObject, ICommand> getCommandFuel = (o) =>
             {
                 return new CheckFuelCommand(o);
             };
-            IoC<Func<UObject, ICommand>>.Resolve("IoC.Registration", "Расход топлива", getCommandFuel);
+            IoC<Func<UObject, ICommand>>.Resolve("IoC.Registration", "Fuel", getCommandFuel);
 
             //СОЗДАНИЕ ИГРЫ С ИГРОВЫМИ ОБЪЕКТАМИ
             for (int j = 1; j <= numberGames; j++)
             {
                 for (int i = 1; i <= numberObject; i++)
                 {
-                    UObject obj = IoC<createObj>.Resolve("Создать игровой объект").Invoke();
+                    UObject obj = IoC<createObj>.Resolve("Create game object").Invoke();
                     IoC<UObject>.Resolve("IoC.Registration", $"game {j} object {i}", obj);
                 }
             }
