@@ -22,13 +22,7 @@ namespace HM2
     {
         static void Main(string[] args)
         {
-            Vector vector = new Vector();
-            vector.Shift = new Coordinats { X = 5.0, Y = 7.0 };
-            vector.DirectionNumber = 1;
 
-            var vr = JsonSerializer.Serialize<Vector>(vector);
-
-            var vextDes = JsonSerializer.Deserialize<Vector>(vr);
         }
     }
 }
