@@ -30,19 +30,6 @@ namespace HM2.Server.Tests
         [SetUp]
         public void CreateQueue()
         {
-            //Регистрация признаков команд, управляющих очередью
-            Func<ICommand, bool> isControlCommand = (c) =>
-            {
-                List<int> controlComands = new List<int>
-                {
-                    typeof(ControlCommand).GetHashCode(),
-                };
-
-                return controlComands.Contains(c.GetType().GetHashCode());
-            };
-
-            IoCs.IoC<Func<ICommand, bool>>.Resolve("IoC.Registration", "IsControlCommand", isControlCommand);
-
             //создание и регистрация очереди
             QueueCommand queueCommand = new QueueCommand();
             IoC<QueueCommand>.Resolve("IoC.Registration", "Queue", queueCommand);
@@ -111,12 +98,13 @@ namespace HM2.Server.Tests
 
             Message message = new Message("1", "3", "Move line", JsonSerializer.Serialize<Vector>(newVector));
 
-            StringBuilder sb = new StringBuilder();
+            //В этом объекте будет наше сериализованное сообщение после выполнения команды SerializeMessageCommands
+            StringBuilder serializedMessage = new StringBuilder();
             //Сериализация message
-            new SerializeMessageCommands(message, sb).Execute();
+            new SerializeMessageCommands(message, serializedMessage).Execute();
 
             //Создание команды интерпретатора
-            InterpretCommand interpretCommand = new InterpretCommand(sb.ToString());
+            InterpretCommand interpretCommand = new InterpretCommand(serializedMessage.ToString());
 
             //проверяем что очередь не запущена
             Assert.IsFalse(IoC<QueueCommand>.Resolve("Queue").TaskIsRun);

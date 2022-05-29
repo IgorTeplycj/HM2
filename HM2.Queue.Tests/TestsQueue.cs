@@ -14,18 +14,7 @@ namespace HM2.Queue.Tests
         [SetUp]
         public void Setup()
         {
-            //–егистраци€ признаков команд, управл€ющих очередью
-            Func<ICommand, bool> isControlCommand = (c) =>
-            {
-                List<int> controlComands = new List<int>
-                {
-                    typeof(ControlCommand).GetHashCode(),
-                };
 
-                return controlComands.Contains(c.GetType().GetHashCode());
-            };
-
-            IoCs.IoC<Func<ICommand, bool>>.Resolve("IoC.Registration", "IsControlCommand", isControlCommand);
         }
 
         [Test]

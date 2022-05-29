@@ -15,6 +15,18 @@ namespace HM2.Threads
         Queue<ICommand> dataQueue;
         public QueueCommand()
         {
+            // Регистрация признаков команд, управляющих очередью
+            Func<ICommand, bool> isControlCommand = (c) =>
+            {
+                List<int> controlComands = new List<int>
+                {
+                    typeof(ControlCommand).GetHashCode(),
+                };
+
+                return controlComands.Contains(c.GetType().GetHashCode());
+            };
+            IoCs.IoC<Func<ICommand, bool>>.Resolve("IoC.Registration", "IsControlCommand", isControlCommand);
+
             cycleIsRun = false;
             dataQueue = new Queue<ICommand>();
             Start = StartDataQueue;
