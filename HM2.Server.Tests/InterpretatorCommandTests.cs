@@ -5,12 +5,15 @@ using HM2.GameSolve.Interfaces;
 using HM2.GameSolve.Structures;
 using HM2.IoCs;
 using HM2.MovableObject;
+using HM2.Threads;
+using HM2.Threads.Commands;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace HM2.Server.Tests
@@ -24,6 +27,27 @@ namespace HM2.Server.Tests
             //создаем три игры по 10 игровых объектов в каждой
             game.Create(3, 10);
         }
+        [SetUp]
+        public void CreateQueue()
+        {
+            //Регистрация признаков команд, управляющих очередью
+            Func<ICommand, bool> isControlCommand = (c) =>
+            {
+                List<int> controlComands = new List<int>
+                {
+                    typeof(ControlCommand).GetHashCode(),
+                };
+
+                return controlComands.Contains(c.GetType().GetHashCode());
+            };
+
+            IoCs.IoC<Func<ICommand, bool>>.Resolve("IoC.Registration", "IsControlCommand", isControlCommand);
+
+            //создание и регистрация очереди
+            QueueCommand queueCommand = new QueueCommand();
+            IoC<QueueCommand>.Resolve("IoC.Registration", "Queue", queueCommand);
+        }
+
         [Test]
         public void InterpretCommandMoveLineTest()
         {
@@ -48,6 +72,75 @@ namespace HM2.Server.Tests
 
             Assert.AreEqual(obj.CurrentVector.PositionNow.X, 5.0);
             Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 7.0);
+        }
+        [Test]
+        public void InterpretCommandRotateTest()
+        {
+            // Выбираем игровой объект под номером 3 из игры номер 1. Им и будем управлять в игре.
+            UObject obj = IoC<UObject>.Resolve($"game 1 object 3");
+            Vector newVect = new Vector();
+            newVect.PositionNow = new Coordinats { X = 80.0, Y = 20.0 };
+            newVect.AngularVelosity = 10;
+            newVect.Direction = 15;
+            newVect.DirectionNumber = 24;
+
+            Message message = new Message("1", "3", "Rotate", JsonSerializer.Serialize<Vector>(newVect));
+
+            StringBuilder sb = new StringBuilder();
+            //Сериализация message
+            new SerializeMessageCommands(message, sb).Execute();
+
+            //Создание команды интерпретатора
+            InterpretCommand interpretCommand = new InterpretCommand(sb.ToString());
+
+            Assert.AreEqual(obj.CurrentVector.Direction, 0);
+
+            interpretCommand.Execute();
+
+            Assert.AreEqual(obj.CurrentVector.Direction, 1);
+            Assert.AreEqual(obj.CurrentVector.PositionNow.X, 80.0);
+            Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 20.0);
+        }
+        [Test]
+        public void InterpretCommandMoveLineRunInQueueTest()
+        {
+            // Выбираем игровой объект под номером 3 из игры номер 1.Им и будем управлять в игре.
+           UObject obj = IoC<UObject>.Resolve($"game 1 object 3");
+            Vector newVector = new Vector();
+            newVector.Shift = new Coordinats { X = 5.0, Y = 7.0 };
+
+            Message message = new Message("1", "3", "Move line", JsonSerializer.Serialize<Vector>(newVector));
+
+            StringBuilder sb = new StringBuilder();
+            //Сериализация message
+            new SerializeMessageCommands(message, sb).Execute();
+
+            //Создание команды интерпретатора
+            InterpretCommand interpretCommand = new InterpretCommand(sb.ToString());
+
+            //проверяем что очередь не запущена
+            Assert.IsFalse(IoC<QueueCommand>.Resolve("Queue").TaskIsRun);
+            //стартуем очередь
+            IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueCommand>.Resolve("Queue").Start));
+            //проверка что очередь запустилась
+            Assert.IsTrue(IoC<QueueCommand>.Resolve("Queue").TaskIsRun);
+
+            //проверка отсутствия изменений вектора объекта
+            Assert.AreEqual(obj.CurrentVector.PositionNow.X, 0.0);
+            Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 0.0);
+            //кладем команду интерпретатора в очерредь
+            IoC<QueueCommand>.Resolve("Queue").PushCommand(interpretCommand);
+            //немножечко ждем
+            Thread.Sleep(20);
+            //проверяем выполнение команды интерпретатора в очереди
+            Assert.AreEqual(obj.CurrentVector.PositionNow.X, 5.0);
+            Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 7.0);
+
+            //завершаем очередь
+            IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueCommand>.Resolve("Queue").HardStop));
+
+            //проверяем что очередь остановилась
+            Assert.IsFalse(IoC<QueueCommand>.Resolve("Queue").TaskIsRun);
         }
     }
 }
