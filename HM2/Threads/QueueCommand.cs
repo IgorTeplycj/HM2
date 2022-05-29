@@ -1,0 +1,116 @@
+﻿using HM2.GameSolve.Interfaces;
+using HM2.IoCs;
+using HM2.Threads.Commands;
+using System;
+using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace HM2.Threads
+{
+    public class QueueCommand
+    {
+        Queue<ICommand> dataQueue;
+        public QueueCommand()
+        {
+            // Регистрация признаков команд, управляющих очередью
+            Func<ICommand, bool> isControlCommand = (c) =>
+            {
+                List<int> controlComands = new List<int>
+                {
+                    typeof(ControlCommand).GetHashCode(),
+                };
+
+                return controlComands.Contains(c.GetType().GetHashCode());
+            };
+            IoCs.IoC<Func<ICommand, bool>>.Resolve("IoC.Registration", "IsControlCommand", isControlCommand);
+
+            cycleIsRun = false;
+            dataQueue = new Queue<ICommand>();
+            Start = StartDataQueue;
+            HardStop = HardStopQueue;
+            SoftStop = SoftStopQueue;
+        }
+        public void PushCommand(ICommand command)
+        {
+            if (IoC<Func<ICommand, bool>>.Resolve("IsControlCommand").Invoke(command))
+            {
+                command.Execute();
+            }
+            else
+            {
+                dataQueue.Enqueue(command);
+            }
+        }
+
+        Task dataCommandQueue;
+        bool cycleIsRun;
+
+        public bool TaskIsRun
+        {
+            get
+            {
+                return cycleIsRun;
+            }
+        }
+
+        /// <summary>
+        /// Делегат для создания управляющей команды старта
+        /// </summary>
+        public Action Start;
+        /// <summary>
+        /// Делегат для создания управляющей команды остановки HardStop
+        /// </summary>
+        public Action HardStop;
+        /// <summary>
+        /// Делегат для создания управляющей команды остановки SoftStop
+        /// </summary>
+        public Action SoftStop;
+
+        public delegate void QueueHandler();
+        /// <summary>
+        /// Обработчик события завершения цикла
+        /// </summary>
+        public event QueueHandler ComplitedThread;
+        /// <summary>
+        /// Оработчик события старта цикла 
+        /// </summary>
+        public event QueueHandler StartThread;
+
+        void HardStopQueue()
+        {
+            dataQueue.Clear();
+            cycleIsRun = false;
+        }
+        void SoftStopQueue()
+        {
+            ICommand softStopedCommand = new ControlCommand(() =>
+            {
+                cycleIsRun = false;
+            });
+            dataQueue.Enqueue(softStopedCommand);
+        }
+
+        void StartDataQueue()
+        {
+            cycleIsRun = true;
+            dataCommandQueue = new Task(() =>
+            {
+                StartThread?.Invoke();
+
+                while (cycleIsRun)
+                {
+                    if (dataQueue.Count > 0)
+                    {
+                        dataQueue.Dequeue().Execute();
+
+                    }    
+                }
+                ComplitedThread?.Invoke();
+            });
+            dataCommandQueue.Start();
+        }
+    }
+}
