@@ -84,7 +84,7 @@ namespace WebServer.Tests
             HM2.IoCs.IoC<EndPointNetServer>.Resolve("Server").Close();
         }
 
-        [Test]
+        //[Test]
         public void AllAlgoritmPositivTest()
         {
             //формируем Http запрос серверу для получения идентификатора игры
@@ -147,7 +147,7 @@ namespace WebServer.Tests
             Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 7.0);
         }
 
-        [Test]
+       // [Test]
         public void InvalidTokenTest()
         {
             //формируем Http запрос серверу для получения идентификатора игры
