@@ -149,7 +149,7 @@ namespace WebServer.Tests
             Assert.IsTrue(true);
         }
 
-        // [Test]
+         [Test]
         public void InvalidTokenTest()
         {
             //формируем Http запрос серверу для получения идентификатора игры
@@ -214,9 +214,6 @@ namespace WebServer.Tests
 
                 }
             }
-
-            //Немножечко ждем
-            Thread.Sleep(100);
 
             //Проверяем что объект изменил свое положение
             Assert.AreEqual(obj.CurrentVector.PositionNow.X, 0.0);
