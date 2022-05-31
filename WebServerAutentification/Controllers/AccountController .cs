@@ -70,14 +70,19 @@ namespace WebServer.Controllers
         [HttpGet("/command")]
         public IActionResult Command(string token, string message)
         {
-            //парсим токен
-
-
-
-
+            //проверка валидности токена
+            Token tokengen = new Token();
+            try
+            { 
+                tokengen.ValidateToken(token); 
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(new { errorText = "Invalid token." });
+            }
+            
             CreateClientAndSendMessage(message);
-
-            return Json("");
+            return Json("Ok");
         }
 
         void CreateClientAndSendMessage(string msg)
