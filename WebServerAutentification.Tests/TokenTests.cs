@@ -64,7 +64,7 @@ namespace WebServer.Tests
          [OneTimeSetUp]
         public void InitTestSuite()
         {
-            запускаем сервер выдачи токенов
+            //запускаем сервер выдачи токенов
             Task tokenServer = new Task(() => WebServer.Program.Main(null));
             tokenServer.Start();
             Thread.Sleep(500);
