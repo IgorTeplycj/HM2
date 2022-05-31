@@ -14,7 +14,33 @@ namespace HM2.Games
     public class Game
     {
         public delegate UObject createObj();
+        public Game()
+        {
+            CreateCommandsAndGameObject();
+        }
         public void Create(int numberGames, int numberObject)
+        {
+            //СОЗДАНИЕ ИГРЫ С ИГРОВЫМИ ОБЪЕКТАМИ
+            for (int j = 1; j <= numberGames; j++)
+            {
+                for (int i = 1; i <= numberObject; i++)
+                {
+                    UObject obj = IoC<createObj>.Resolve("Create game object").Invoke();
+                    IoC<UObject>.Resolve("IoC.Registration", $"game {j} object {i}", obj);
+                }
+            }
+        }
+
+        public void CreateGame(string idGame, int numberObject)
+        {
+            for (int i = 1; i <= numberObject; i++)
+            {
+                UObject obj = IoC<createObj>.Resolve("Create game object").Invoke();
+                IoC<UObject>.Resolve("IoC.Registration", $"game {idGame} object {i}", obj);
+            }
+        }
+
+        void CreateCommandsAndGameObject()
         {
             //создание игрового объекта
             createObj createObj = () =>
@@ -47,16 +73,6 @@ namespace HM2.Games
                 return new CheckFuelCommand(o);
             };
             IoC<Func<UObject, ICommand>>.Resolve("IoC.Registration", "Fuel", getCommandFuel);
-
-            //СОЗДАНИЕ ИГРЫ С ИГРОВЫМИ ОБЪЕКТАМИ
-            for (int j = 1; j <= numberGames; j++)
-            {
-                for (int i = 1; i <= numberObject; i++)
-                {
-                    UObject obj = IoC<createObj>.Resolve("Create game object").Invoke();
-                    IoC<UObject>.Resolve("IoC.Registration", $"game {j} object {i}", obj);
-                }
-            }
         }
     }
 }
