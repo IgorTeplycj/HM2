@@ -53,7 +53,7 @@ namespace WebServer.Tests
             HM2.IoCs.IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(HM2.IoCs.IoC<QueueCommand>.Resolve("Queue").Start));
         }
 
-       // [TearDown]
+        [TearDown]
         public void Down()
         {
             //завершаем очередь
@@ -61,7 +61,7 @@ namespace WebServer.Tests
 
         }
 
-       // [OneTimeSetUp]
+        // [OneTimeSetUp]
         public void InitTestSuite()
         {
             //запускаем сервер выдачи токенов
@@ -77,7 +77,7 @@ namespace WebServer.Tests
             HM2.IoCs.IoC<EndPointNetServer>.Resolve("Server").Run();
         }
 
-       // [OneTimeTearDown]
+        // [OneTimeTearDown]
         public void FinishTestSuite()
         {
             //«авершаем игровой сервер
@@ -149,7 +149,7 @@ namespace WebServer.Tests
             Assert.IsTrue(true);
         }
 
-       // [Test]
+        // [Test]
         public void InvalidTokenTest()
         {
             //формируем Http запрос серверу дл€ получени€ идентификатора игры
