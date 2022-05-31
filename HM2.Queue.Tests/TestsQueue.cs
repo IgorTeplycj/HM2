@@ -42,7 +42,7 @@ namespace HM2.Queue.Tests
             Assert.IsTrue(queueCommand.TaskIsRun);
             Thread.Sleep(23);
             queueCommand.PushCommand(new ControlCommand(queueCommand.SoftStop));
-            Thread.Sleep(60);
+            Thread.Sleep(65);
 
             Assert.IsTrue(command1.CommandIsComplited());
             Assert.IsTrue(command2.CommandIsComplited());

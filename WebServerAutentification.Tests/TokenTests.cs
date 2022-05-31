@@ -84,7 +84,7 @@ namespace WebServer.Tests
             HM2.IoCs.IoC<EndPointNetServer>.Resolve("Server").Close();
         }
 
-       // [Test]
+        [Test]
         public void AllAlgoritmPositivTest()
         {
             ////формируем Http запрос серверу для получения идентификатора игры
