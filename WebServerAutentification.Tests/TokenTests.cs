@@ -87,19 +87,19 @@ namespace WebServer.Tests
         [Test]
         public void AllAlgoritmPositivTest()
         {
-            ////формируем Http запрос серверу для получения идентификатора игры
-            //string idGame = "";
-            //using (var client = new HttpClient())
-            //{
-            //    const string PATHURIIDGAME = "http://localhost:5000/idgame";
-            //    string lst = JsonSerializer.Serialize(autirizedUsers);
-            //    string getParametersIDGAME = $"jsonListUsers={lst}";
-            //    idGame = client.GetStringAsync(PATHURIIDGAME + $"?{getParametersIDGAME}").Result;
-            //}
-            //idGame = idGame.Trim(@"\""".ToCharArray());
-            ////Создаем игру с полученным идентификатором и тремя игровыми объектами
-            //HM2.Games.Game game = new HM2.Games.Game();
-            //game.CreateGame(idGame, 3);
+            //формируем Http запрос серверу для получения идентификатора игры
+            string idGame = "";
+            using (var client = new HttpClient())
+            {
+                const string PATHURIIDGAME = "http://localhost:5000/idgame";
+                string lst = JsonSerializer.Serialize(autirizedUsers);
+                string getParametersIDGAME = $"jsonListUsers={lst}";
+                idGame = client.GetStringAsync(PATHURIIDGAME + $"?{getParametersIDGAME}").Result;
+            }
+            idGame = idGame.Trim(@"\""".ToCharArray());
+            //Создаем игру с полученным идентификатором и тремя игровыми объектами
+            HM2.Games.Game game = new HM2.Games.Game();
+            game.CreateGame(idGame, 3);
 
             ////User1 отправляет запрос на выдачу jwt токена
             //Account user1 = autirizedUsers.Find(x => x.Name == "User1");
