@@ -64,10 +64,10 @@ namespace WebServer.Tests
          [OneTimeSetUp]
         public void InitTestSuite()
         {
-            //запускаем сервер выдачи токенов
-           // Task tokenServer = new Task(() => WebServer.Program.Main(null));
-           // tokenServer.Start();
-            //Thread.Sleep(500);
+            запускаем сервер выдачи токенов
+            Task tokenServer = new Task(() => WebServer.Program.Main(null));
+            tokenServer.Start();
+            Thread.Sleep(500);
 
             //Запускаем игровой сервер
             EndPointNetServer endPointServer = new EndPointNetServer(ipAddr, port);
