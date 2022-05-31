@@ -70,10 +70,9 @@ namespace WebServer.Controllers
         [HttpGet("/command")]
         public IActionResult Command(string token, string message)
         {
-            //Message message1 = new Message(null, null, null, null);
-            //DeserializeMessageCommand deserializeMessageCommand = 
-            //    new DeserializeMessageCommand(message1, new System.Text.StringBuilder(message));
-            //deserializeMessageCommand.Execute();
+
+
+
 
             CreateClientAndSendMessage(message);
 
