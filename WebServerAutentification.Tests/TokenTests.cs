@@ -61,13 +61,13 @@ namespace WebServer.Tests
 
         }
 
-        // [OneTimeSetUp]
+         [OneTimeSetUp]
         public void InitTestSuite()
         {
             //запускаем сервер выдачи токенов
-            Task tokenServer = new Task(() => WebServer.Program.Main(null));
-            tokenServer.Start();
-            Thread.Sleep(500);
+           // Task tokenServer = new Task(() => WebServer.Program.Main(null));
+           // tokenServer.Start();
+            //Thread.Sleep(500);
 
             //Запускаем игровой сервер
             EndPointNetServer endPointServer = new EndPointNetServer(ipAddr, port);
@@ -77,7 +77,7 @@ namespace WebServer.Tests
             HM2.IoCs.IoC<EndPointNetServer>.Resolve("Server").Run();
         }
 
-        // [OneTimeTearDown]
+         [OneTimeTearDown]
         public void FinishTestSuite()
         {
             //Завершаем игровой сервер
