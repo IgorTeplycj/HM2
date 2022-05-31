@@ -44,7 +44,7 @@ namespace WebServer.Tests
 
         }
 
-      //  [SetUp]
+        [SetUp]
         public void CreateQueueAndRun()
         {
             //создание и регистрация очереди
