@@ -101,50 +101,50 @@ namespace WebServer.Tests
             HM2.Games.Game game = new HM2.Games.Game();
             game.CreateGame(idGame, 3);
 
-            ////User1 отправляет запрос на выдачу jwt токена
-            //Account user1 = autirizedUsers.Find(x => x.Name == "User1");
-            //string token = ""; //в этой строке будет храниться полученный токен
-            //using (var client = new HttpClient())
-            //{
-            //    const string TOKENURL = "http://localhost:5000/token";
-            //    string usr = JsonSerializer.Serialize(user1);
-            //    string getParametersTOKEN = $"user={usr}&idgame={idGame}";
-            //    token = client.GetStringAsync(TOKENURL + $"?{getParametersTOKEN}").Result;
-            //}
-            //token = token.Trim(@"\""".ToCharArray());
-            ////User1 отправляет запрос на игровой сервер
-            ////User1 выбирает объект номер 1 
-            //UObject obj = HM2.IoCs.IoC<UObject>.Resolve($"game {idGame} object 1");
-            ////формируем новый вектор
-            //Vector newVect = new Vector();
-            //newVect.Shift = new Coordinats { X = 5.0, Y = 7.0 };
+            //User1 отправляет запрос на выдачу jwt токена
+            Account user1 = autirizedUsers.Find(x => x.Name == "User1");
+            string token = ""; //в этой строке будет храниться полученный токен
+            using (var client = new HttpClient())
+            {
+                const string TOKENURL = "http://localhost:5000/token";
+                string usr = JsonSerializer.Serialize(user1);
+                string getParametersTOKEN = $"user={usr}&idgame={idGame}";
+                token = client.GetStringAsync(TOKENURL + $"?{getParametersTOKEN}").Result;
+            }
+            token = token.Trim(@"\""".ToCharArray());
+            //User1 отправляет запрос на игровой сервер
+            //User1 выбирает объект номер 1 
+            UObject obj = HM2.IoCs.IoC<UObject>.Resolve($"game {idGame} object 1");
+            //формируем новый вектор
+            Vector newVect = new Vector();
+            newVect.Shift = new Coordinats { X = 5.0, Y = 7.0 };
 
-            ////Формируем сообщение для сервера
-            //Message message = new Message(idGame, "1", "Move line", JsonSerializer.Serialize<Vector>(newVect));
-            ////Сериализуем сообщение в строку
-            //StringBuilder serializedMessage = new StringBuilder();
-            //new SerializeMessageCommands(message, serializedMessage).Execute();
+            //Формируем сообщение для сервера
+            Message message = new Message(idGame, "1", "Move line", JsonSerializer.Serialize<Vector>(newVect));
+            //Сериализуем сообщение в строку
+            StringBuilder serializedMessage = new StringBuilder();
+            new SerializeMessageCommands(message, serializedMessage).Execute();
 
-            ////Проверяем, что объект не двигался
-            //Assert.AreEqual(obj.CurrentVector.PositionNow.X, 0.0);
-            //Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 0.0);
+            //Проверяем, что объект не двигался
+            Assert.AreEqual(obj.CurrentVector.PositionNow.X, 0.0);
+            Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 0.0);
 
-            ////отправляем команду с токеном на игровой сервер (здесь, чтобы не усложнять задачу и не создавать еще один локальный http сервер,
-            ////в качестве игрового использован сервер аутентификации). На игровом сервере проверяется токен,
-            ////формируется и отправляется сообщение с командой на EndPoints нашего проекта игры
-            //using (var client = new HttpClient())
-            //{
-            //    const string URL = "http://localhost:5000/command";
-            //    string param = $"token={token}&message={serializedMessage}";
-            //    var result = client.GetStringAsync(URL + $"?{param}").Result;
-            //}
+            //отправляем команду с токеном на игровой сервер (здесь, чтобы не усложнять задачу и не создавать еще один локальный http сервер,
+            //в качестве игрового использован сервер аутентификации). На игровом сервере проверяется токен,
+            //формируется и отправляется сообщение с командой на EndPoints нашего проекта игры
+            using (var client = new HttpClient())
+            {
+                const string URL = "http://localhost:5000/command";
+                string param = $"token={token}&message={serializedMessage}";
+                var result = client.GetStringAsync(URL + $"?{param}").Result;
+            }
 
-            ////Немножечко ждем
-            //Thread.Sleep(100);
+            //Немножечко ждем
+            Thread.Sleep(500);
 
-            ////Проверяем что объект изменил свое положение
-            //Assert.AreEqual(obj.CurrentVector.PositionNow.X, 5.0);
-            //Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 7.0);
+            //Проверяем что объект изменил свое положение
+            Assert.AreEqual(obj.CurrentVector.PositionNow.X, 5.0);
+            Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 7.0);
 
             Assert.IsTrue(true);
         }
