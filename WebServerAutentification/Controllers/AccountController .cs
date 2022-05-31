@@ -70,6 +70,7 @@ namespace WebServer.Controllers
         [HttpGet("/command")]
         public IActionResult Command(string token, string message)
         {
+            //парсим токен
 
 
 
