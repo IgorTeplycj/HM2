@@ -1,5 +1,7 @@
 ﻿using HM2.GameSolve.Interfaces;
 using HM2.IoCs;
+using HM2.State;
+using HM2.State.States;
 using HM2.Threads.Commands;
 using System;
 using System.Collections.Concurrent;
@@ -10,10 +12,11 @@ using System.Threading.Tasks;
 
 namespace HM2.Threads
 {
-    public class QueueCommand
+    public class QueueThread
     {
-        Queue<ICommand> dataQueue;
-        public QueueCommand()
+        public IState state;
+        Queue<ICommand> queue;
+        public QueueThread()
         {
             // Регистрация признаков команд, управляющих очередью
             Func<ICommand, bool> isControlCommand = (c) =>
@@ -27,8 +30,8 @@ namespace HM2.Threads
             };
             IoCs.IoC<Func<ICommand, bool>>.Resolve("IoC.Registration", "IsControlCommand", isControlCommand);
 
-            cycleIsRun = false;
-            dataQueue = new Queue<ICommand>();
+            taskIsRun = false;
+            queue = new Queue<ICommand>();
             Start = StartDataQueue;
             HardStop = HardStopQueue;
             SoftStop = SoftStopQueue;
@@ -41,18 +44,22 @@ namespace HM2.Threads
             }
             else
             {
-                dataQueue.Enqueue(command);
+                queue.Enqueue(command);
             }
         }
 
         Task dataCommandQueue;
-        bool cycleIsRun;
 
+        bool taskIsRun;
         public bool TaskIsRun
         {
             get
             {
-                return cycleIsRun;
+                return taskIsRun;
+            }
+            private set
+            {
+                taskIsRun = value;
             }
         }
 
@@ -81,36 +88,36 @@ namespace HM2.Threads
 
         void HardStopQueue()
         {
-            dataQueue.Clear();
-            cycleIsRun = false;
+            state = new HardStopState(queue, () => { queue.Clear(); taskIsRun = false; });
         }
         void SoftStopQueue()
         {
-            ICommand softStopedCommand = new ControlCommand(() =>
-            {
-                cycleIsRun = false;
-            });
-            dataQueue.Enqueue(softStopedCommand);
+            state = new SoftStopState(queue, () => { TaskIsRun = false; });
         }
 
         void StartDataQueue()
         {
-            cycleIsRun = true;
+            //Устанавливаем состояние Normal
+            state = new Normal(queue);
+
+            taskIsRun = true;
             dataCommandQueue = new Task(() =>
             {
                 StartThread?.Invoke();
 
-                while (cycleIsRun)
+                while (taskIsRun)
                 {
-                    if (dataQueue.Count > 0)
+                    if (queue.Count > 0)
                     {
-                        dataQueue.Dequeue().Execute();
-
+                        state.Execute();
                     }    
                 }
                 ComplitedThread?.Invoke();
             });
             dataCommandQueue.Start();
         }
+
+
+
     }
 }

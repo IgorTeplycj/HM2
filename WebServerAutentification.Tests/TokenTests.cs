@@ -48,16 +48,16 @@ namespace WebServer.Tests
         public void CreateQueueAndRun()
         {
             //создание и регистрация очереди
-            HM2.IoCs.IoC<QueueCommand>.Resolve("IoC.Registration", "Queue", new QueueCommand());
+            HM2.IoCs.IoC<QueueThread>.Resolve("IoC.Registration", "Queue", new QueueThread());
             //стартуем очередь
-            HM2.IoCs.IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(HM2.IoCs.IoC<QueueCommand>.Resolve("Queue").Start));
+            HM2.IoCs.IoC<QueueThread>.Resolve("Queue").PushCommand(new ControlCommand(HM2.IoCs.IoC<QueueThread>.Resolve("Queue").Start));
         }
 
         [TearDown]
         public void Down()
         {
             //завершаем очередь
-            HM2.IoCs.IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(HM2.IoCs.IoC<QueueCommand>.Resolve("Queue").HardStop));
+            HM2.IoCs.IoC<QueueThread>.Resolve("Queue").PushCommand(new ControlCommand(HM2.IoCs.IoC<QueueThread>.Resolve("Queue").HardStop));
 
         }
         Task tokenServer;

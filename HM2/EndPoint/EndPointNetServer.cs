@@ -68,7 +68,7 @@ namespace HM2.EndPoint
 
         void QueueAdd(string message)
         {
-            new AddQueueCommand(new InterpretCommand(message), IoC<QueueCommand>.Resolve("Queue")).Execute();
+            new AddQueueCommand(new InterpretCommand(message), IoC<QueueThread>.Resolve("Queue")).Execute();
         }
     }
 }

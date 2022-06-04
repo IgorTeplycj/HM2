@@ -10,8 +10,8 @@ namespace HM2.Threads.Commands
     public class AddQueueCommand : ICommand
     {
         ICommand addCommand;
-        QueueCommand targetQueue;
-        public AddQueueCommand(ICommand addCommand, QueueCommand targetQueue)
+        QueueThread targetQueue;
+        public AddQueueCommand(ICommand addCommand, QueueThread targetQueue)
         {
             this.addCommand = addCommand;
             this.targetQueue = targetQueue;

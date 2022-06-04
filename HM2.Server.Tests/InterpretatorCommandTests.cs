@@ -31,8 +31,8 @@ namespace HM2.Server.Tests
         public void CreateQueue()
         {
             //создание и регистрация очереди
-            QueueCommand queueCommand = new QueueCommand();
-            IoC<QueueCommand>.Resolve("IoC.Registration", "Queue", queueCommand);
+            QueueThread queueCommand = new QueueThread();
+            IoC<QueueThread>.Resolve("IoC.Registration", "Queue", queueCommand);
         }
 
         [Test]
@@ -107,17 +107,17 @@ namespace HM2.Server.Tests
             InterpretCommand interpretCommand = new InterpretCommand(serializedMessage.ToString());
 
             //проверяем что очередь не запущена
-            Assert.IsFalse(IoC<QueueCommand>.Resolve("Queue").TaskIsRun);
+            Assert.IsFalse(IoC<QueueThread>.Resolve("Queue").TaskIsRun);
             //стартуем очередь
-            IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueCommand>.Resolve("Queue").Start));
+            IoC<QueueThread>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueThread>.Resolve("Queue").Start));
             //проверка что очередь запустилась
-            Assert.IsTrue(IoC<QueueCommand>.Resolve("Queue").TaskIsRun);
+            Assert.IsTrue(IoC<QueueThread>.Resolve("Queue").TaskIsRun);
 
             //проверка отсутствия изменений вектора объекта
             Assert.AreEqual(obj.CurrentVector.PositionNow.X, 0.0);
             Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 0.0);
             //кладем команду интерпретатора в очерредь
-            IoC<QueueCommand>.Resolve("Queue").PushCommand(interpretCommand);
+            IoC<QueueThread>.Resolve("Queue").PushCommand(interpretCommand);
             //немножечко ждем
             Thread.Sleep(20);
             //проверяем выполнение команды интерпретатора в очереди
@@ -125,10 +125,10 @@ namespace HM2.Server.Tests
             Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 7.0);
 
             //завершаем очередь
-            IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueCommand>.Resolve("Queue").HardStop));
+            IoC<QueueThread>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueThread>.Resolve("Queue").HardStop));
 
             //проверяем что очередь остановилась
-            Assert.IsFalse(IoC<QueueCommand>.Resolve("Queue").TaskIsRun);
+            Assert.IsFalse(IoC<QueueThread>.Resolve("Queue").TaskIsRun);
         }
     }
 }

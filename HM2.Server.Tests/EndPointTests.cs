@@ -46,15 +46,15 @@ namespace HM2.Server.Tests
         public void CreateQueueAndRun()
         {
             //создание и регистрация очереди
-            IoC<QueueCommand>.Resolve("IoC.Registration", "Queue", new QueueCommand());
+            IoC<QueueThread>.Resolve("IoC.Registration", "Queue", new QueueThread());
             //стартуем очередь
-            IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueCommand>.Resolve("Queue").Start));
+            IoC<QueueThread>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueThread>.Resolve("Queue").Start));
         }
         [TearDown]
         public void Down()
         {
             //завершаем очередь
-            IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueCommand>.Resolve("Queue").HardStop));
+            IoC<QueueThread>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueThread>.Resolve("Queue").HardStop));
             //Завершаем сервер
             IoC<EndPointNetServer>.Resolve("Server").Close();
         }

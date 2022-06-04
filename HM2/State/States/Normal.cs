@@ -1,0 +1,28 @@
+﻿using HM2.GameSolve.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HM2.State.States
+{
+    public class Normal : IState
+    {
+        Queue<ICommand> queue;
+        public Normal(Queue<ICommand> queue)
+        {
+            this.queue = queue;
+        }
+
+        public void Execute()
+        {
+            queue.Dequeue().Execute();
+        }
+
+        public StateEnum Handle()
+        {
+            return StateEnum.Normal;
+        }
+    }
+}

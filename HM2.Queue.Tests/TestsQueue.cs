@@ -27,7 +27,7 @@ namespace HM2.Queue.Tests
             MockCommandDelay command5 = new MockCommandDelay(10);
             MockCommandDelay command6 = new MockCommandDelay(10);
 
-            QueueCommand queueCommand = new QueueCommand();
+            QueueThread queueCommand = new QueueThread();
             queueCommand.PushCommand(command1);
             queueCommand.PushCommand(command2);
             queueCommand.PushCommand(command3);
@@ -66,7 +66,7 @@ namespace HM2.Queue.Tests
             MockCommandDelay command5 = new MockCommandDelay(10);
             MockCommandDelay command6 = new MockCommandDelay(10);
 
-            QueueCommand queueCommand = new QueueCommand();
+            QueueThread queueCommand = new QueueThread();
             queueCommand.PushCommand(command1);
             queueCommand.PushCommand(command2);
             queueCommand.PushCommand(command3);
@@ -108,7 +108,7 @@ namespace HM2.Queue.Tests
             bool eventStartIsWorked = false;
             bool eventComplitedIsWorked = false;
 
-            QueueCommand queueCommand = new QueueCommand();
+            QueueThread queueCommand = new QueueThread();
             queueCommand.StartThread += () =>
             {
                 eventStartIsWorked = true;
@@ -157,7 +157,7 @@ namespace HM2.Queue.Tests
             MockCommandDelay command5 = new MockCommandDelay(0);
             MockCommandDelay command6 = new MockCommandDelay(0);
 
-            QueueCommand queueCommand = new QueueCommand();
+            QueueThread queueCommand = new QueueThread();
             queueCommand.PushCommand(command1);
             queueCommand.PushCommand(command2);
             queueCommand.PushCommand(command3);
