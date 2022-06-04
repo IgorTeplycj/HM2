@@ -60,12 +60,12 @@ namespace WebServer.Tests
             HM2.IoCs.IoC<QueueCommand>.Resolve("Queue").PushCommand(new ControlCommand(HM2.IoCs.IoC<QueueCommand>.Resolve("Queue").HardStop));
 
         }
-
-         [OneTimeSetUp]
+        Task tokenServer;
+        [OneTimeSetUp]
         public void InitTestSuite()
         {
             //запускаем сервер выдачи токенов
-            Task tokenServer = new Task(() => WebServer.Program.Main(null));
+            tokenServer = new Task(() => WebServer.Program.Main(null));
             tokenServer.Start();
             Thread.Sleep(500);
 
@@ -77,11 +77,12 @@ namespace WebServer.Tests
             HM2.IoCs.IoC<EndPointNetServer>.Resolve("Server").Run();
         }
 
-         [OneTimeTearDown]
+        [OneTimeTearDown]
         public void FinishTestSuite()
         {
             //Завершаем игровой сервер
             HM2.IoCs.IoC<EndPointNetServer>.Resolve("Server").Close();
+           // WebServer.Program.Dispose();
         }
 
         [Test]
@@ -145,11 +146,9 @@ namespace WebServer.Tests
             //Проверяем что объект изменил свое положение
             Assert.AreEqual(obj.CurrentVector.PositionNow.X, 5.0);
             Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 7.0);
-
-            Assert.IsTrue(true);
         }
 
-         [Test]
+        [Test]
         public void InvalidTokenTest()
         {
             //формируем Http запрос серверу для получения идентификатора игры

@@ -11,9 +11,16 @@ namespace WebServer
 {
     public class Program
     {
+        static IHost host;
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            host = CreateHostBuilder(args).Build();
+            host.Run();
+        }
+
+        public static void Dispose()
+        {
+            host.Dispose();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
