@@ -98,7 +98,7 @@ namespace HM2.Threads
         void StartDataQueue()
         {
             //Устанавливаем состояние Normal
-            state = new Normal(queue);
+            state = new Normal(queue, null);
 
             taskIsRun = true;
             dataCommandQueue = new Task(() =>

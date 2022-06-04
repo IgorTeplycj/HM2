@@ -10,9 +10,10 @@ namespace HM2.State.States
     public class Normal : IState
     {
         Queue<ICommand> queue;
-        public Normal(Queue<ICommand> queue)
+        public Normal(Queue<ICommand> queue, Action normal)
         {
             this.queue = queue;
+            normal?.Invoke();
         }
 
         public void Execute()
