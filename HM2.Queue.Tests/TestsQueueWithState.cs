@@ -19,8 +19,7 @@ namespace HM2.Queue.Tests
         [SetUp]
         public void Setup()
         {
-            //Для перегрузки команд в резервную очередь создадим и зарегестрируем резервную очередь в контейнере
-            IoC<QueueThread>.Resolve("IoC.Registration", "ReservedQueue", new QueueThread());
+            
         }
 
         /// <summary>
@@ -69,6 +68,9 @@ namespace HM2.Queue.Tests
         [Test]
         public void TestMoveToCommand()
         {
+            //Для перегрузки команд в резервную очередь создадим и зарегестрируем резервную очередь в контейнере
+            IoC<QueueThread>.Resolve("IoC.Registration", "ReservedQueue", new QueueThread());
+
             MockCommandDelay command1 = new MockCommandDelay(10);
             MockCommandDelay command2 = new MockCommandDelay(10);
             MockCommandDelay command3 = new MockCommandDelay(10);
