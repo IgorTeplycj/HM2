@@ -19,7 +19,7 @@ namespace HM2.Queue.Tests
         [SetUp]
         public void Setup()
         {
-            
+
         }
 
         /// <summary>
@@ -107,9 +107,9 @@ namespace HM2.Queue.Tests
             Thread.Sleep(500);
             Assert.AreEqual(reservedQueue.state.Handle(), StateEnum.Normal);
 
-            //Assert.IsTrue(command4.CommandIsComplited()); //Проверяем выполнение перегруженных команд в резервной очереди
-                                                          //   Assert.IsTrue(command5.CommandIsComplited()); //Проверяем выполнение перегруженных команд в резервной очереди
-                                                          // Assert.IsTrue(command6.CommandIsComplited()); //Проверяем выполнение перегруженных команд в резервной очереди
+            Assert.IsTrue(command4.CommandIsComplited()); //Проверяем выполнение перегруженных команд в резервной очереди
+            Assert.IsTrue(command5.CommandIsComplited()); //Проверяем выполнение перегруженных команд в резервной очереди
+            Assert.IsTrue(command6.CommandIsComplited()); //Проверяем выполнение перегруженных команд в резервной очереди
 
             reservedQueue.PushCommand(new ControlCommand(reservedQueue.HardStop)); //останавливаем резервную очередь
             Thread.Sleep(5);
