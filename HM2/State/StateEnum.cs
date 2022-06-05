@@ -8,9 +8,10 @@ namespace HM2.State
 {
     public enum StateEnum
     {
-        HardStoped = 0,
-        SoftStopped = 1,
-        Normal = 2,
-        MoveTo = 3
+        NoRun = 0,
+        HardStoped = 1,
+        SoftStopped = 2,
+        Normal = 3,
+        MoveTo =4
     }
 }

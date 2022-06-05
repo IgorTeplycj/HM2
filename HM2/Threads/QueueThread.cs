@@ -32,10 +32,15 @@ namespace HM2.Threads
 
             taskIsRun = false;
             queue = new Queue<ICommand>();
-            Start = StartDataQueue;
+            //Устанавливаем состояние NoRun по умолчанию
+            state = new NoRun(queue, null);
+
+            Start = StartQueue;
             HardStop = HardStopQueue;
             SoftStop = SoftStopQueue;
+            MoveTo = _MoveTo;
         }
+
         public void PushCommand(ICommand command)
         {
             if (IoC<Func<ICommand, bool>>.Resolve("IsControlCommand").Invoke(command))
@@ -45,6 +50,13 @@ namespace HM2.Threads
             else
             {
                 queue.Enqueue(command);
+            }
+        }
+        public void PushCommand(Queue<ICommand> Queuecommand)
+        {
+            foreach(var item in Queuecommand)
+            {
+                PushCommand(item);
             }
         }
 
@@ -75,6 +87,10 @@ namespace HM2.Threads
         /// Делегат для создания управляющей команды остановки SoftStop
         /// </summary>
         public Action SoftStop;
+        /// <summary>
+        /// Делегат для создания управляющей команды MoveTo
+        /// </summary>
+        public Action MoveTo;
 
         public delegate void QueueHandler();
         /// <summary>
@@ -94,12 +110,17 @@ namespace HM2.Threads
         {
             state = new SoftStopState(queue, () => { TaskIsRun = false; });
         }
-
-        void StartDataQueue()
+        void StartQueue()
         {
-            //Устанавливаем состояние Normal
-            state = new Normal(queue, null);
+            state = new Normal(queue, RunThead);
+        }
+        void _MoveTo()
+        {
+            state = new MoveTo(queue, null);
+        }
 
+        void RunThead()
+        {
             taskIsRun = true;
             dataCommandQueue = new Task(() =>
             {
@@ -116,8 +137,5 @@ namespace HM2.Threads
             });
             dataCommandQueue.Start();
         }
-
-
-
     }
 }

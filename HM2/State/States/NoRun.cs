@@ -1,5 +1,4 @@
 ﻿using HM2.GameSolve.Interfaces;
-using HM2.Threads.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,19 +7,15 @@ using System.Threading.Tasks;
 
 namespace HM2.State.States
 {
-    public class SoftStopState : IState
+    public class NoRun : IState
     {
         Queue<ICommand> queue;
-        public SoftStopState(Queue<ICommand> queue, Action stopExecute)
+        public NoRun(Queue<ICommand> queue, Action normal)
         {
             this.queue = queue;
-
-            ICommand softStopedCommand = new ControlCommand(() =>
-            {
-                stopExecute?.Invoke();
-            });
-            queue.Enqueue(softStopedCommand);
+            normal?.Invoke();
         }
+
         public void Execute()
         {
             queue.Dequeue().Execute();
@@ -28,7 +23,7 @@ namespace HM2.State.States
 
         public StateEnum Handle()
         {
-            return StateEnum.SoftStopped;
+            return StateEnum.NoRun;
         }
     }
 }
