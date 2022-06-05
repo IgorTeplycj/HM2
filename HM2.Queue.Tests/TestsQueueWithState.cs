@@ -66,7 +66,7 @@ namespace HM2.Queue.Tests
             Assert.IsFalse(queueCommand.TaskIsRun); //проверяем что после HarStop поток завершился.
         }
 
-        [Test]
+        //[Test]
         public void TestMoveToCommand()
         {
             MockCommandDelay command1 = new MockCommandDelay(10);
@@ -102,7 +102,7 @@ namespace HM2.Queue.Tests
             QueueThread reservedQueue = IoC<QueueThread>.Resolve("ReservedQueue"); //получаем резервную очередь из контейнера
             reservedQueue.PushCommand(new ControlCommand(reservedQueue.Start)); //Запусскаем резервную очередь
 
-            Thread.Sleep(100);
+            Thread.Sleep(40);
             Assert.IsTrue(command4.CommandIsComplited()); //Проверяем выполнение перегруженных команд в резервной очереди
             Assert.IsTrue(command5.CommandIsComplited()); //Проверяем выполнение перегруженных команд в резервной очереди
             Assert.IsTrue(command6.CommandIsComplited()); //Проверяем выполнение перегруженных команд в резервной очереди
