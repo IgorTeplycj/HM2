@@ -81,7 +81,7 @@ namespace HM2.Server.Tests
             //отправляем сообщение серверу 
             CreateClientAndSendMessage(serializedMessage.ToString());
             //Немножечко ждем
-            Thread.Sleep(200);
+            Thread.Sleep(500);
 
             //Проверяем что объект изменил свое положение
             Assert.AreEqual(obj.CurrentVector.PositionNow.X, 5.0);
