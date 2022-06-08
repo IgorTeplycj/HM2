@@ -119,7 +119,7 @@ namespace HM2.Server.Tests
             //кладем команду интерпретатора в очерредь
             IoC<QueueThread>.Resolve("Queue").PushCommand(interpretCommand);
             //немножечко ждем
-            Thread.Sleep(20);
+            Thread.Sleep(40);
             //проверяем выполнение команды интерпретатора в очереди
             Assert.AreEqual(obj.CurrentVector.PositionNow.X, 5.0);
             Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 7.0);
