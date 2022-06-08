@@ -20,7 +20,7 @@ namespace HM2.Tests.CollisionTests
             IoC<double>.Resolve("IoC.Registration", "discrete", 0.1); //регистрируем дискрету. Это та наименьшая величина, на которую мы можем сдвинуть объект на поле
         }
         /// <summary>
-        /// Тест разбиения полей на квадраты полей
+        /// Тест разбиения главного поля на квадраты
         /// </summary>
         [Test]
         public void CreateAndSplitFieldsTest()
