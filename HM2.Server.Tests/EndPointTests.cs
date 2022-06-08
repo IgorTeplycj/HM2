@@ -26,7 +26,7 @@ namespace HM2.Server.Tests
         const string ipAddr = "127.0.0.1";
         const int port = 8080;
 
-      //  [SetUp]
+        [SetUp]
         public void StartServer()
         {
             EndPointNetServer endPointServer = new EndPointNetServer(ipAddr, port);
@@ -35,14 +35,14 @@ namespace HM2.Server.Tests
             //старт сервера
             IoC<EndPointNetServer>.Resolve("Server").Run();
         }
-      //  [SetUp]
+        [SetUp]
         public void CreateGameObject()
         {
             Game game = new Game();
             //создаем три игры по 10 игровых объектов в каждой
             game.Create(3, 10);
         }
-       // [SetUp]
+        [SetUp]
         public void CreateQueueAndRun()
         {
             //создание и регистрация очереди
@@ -50,7 +50,7 @@ namespace HM2.Server.Tests
             //стартуем очередь
             IoC<QueueThread>.Resolve("Queue").PushCommand(new ControlCommand(IoC<QueueThread>.Resolve("Queue").Start));
         }
-        //[TearDown]
+        [TearDown]
         public void Down()
         {
             //завершаем очередь
@@ -60,7 +60,7 @@ namespace HM2.Server.Tests
         }
 
 
-       // [Test]
+        [Test]
         public void MoveObjectByServer()
         {
             //Выбираем игровой объект под номером 3 из игры номер 1. Им и будем управлять в игре.
