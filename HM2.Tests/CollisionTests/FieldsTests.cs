@@ -44,6 +44,8 @@ namespace HM2.Tests.CollisionTests
             //Проверка что квадрат с указанными координатами не существует
             var item3= mainField.objContainer.Find(c => c.StartX == 400 && c.EndX == 600.0 && c.StartY == 200 && c.EndY == 400.0);
             Assert.IsNull(item3);
+
+            Assert.IsNotNull(null);
         }
     }
 }
