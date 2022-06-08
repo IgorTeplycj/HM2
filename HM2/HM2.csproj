@@ -11,4 +11,8 @@
 	  <ProjectReference Include="..\Message\EndPointMessage.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Model\" />
+	</ItemGroup>
+
 </Project>

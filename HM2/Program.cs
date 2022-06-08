@@ -22,7 +22,7 @@ namespace HM2
     {
         static void Main(string[] args)
         {
-
+            
         }
     }
 }
