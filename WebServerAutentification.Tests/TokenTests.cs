@@ -38,13 +38,13 @@ namespace WebServer.Tests
             new Account { Email = "user2@gmail.com", Name = "User2", HashOfPassword = Hash.GetMd5Hash("22225"), Role = Roles.User },
             new Account { Email = "user3@gmail.com", Name = "User3", HashOfPassword = Hash.GetMd5Hash("33335"), Role = Roles.User },
         };
-       // [SetUp]
+        [SetUp]
         public void StartGameServer()
         {
 
         }
 
-        //[SetUp]
+        [SetUp]
         public void CreateQueueAndRun()
         {
             //создание и регистрация очереди
@@ -53,7 +53,7 @@ namespace WebServer.Tests
             HM2.IoCs.IoC<QueueThread>.Resolve("Queue").PushCommand(new ControlCommand(HM2.IoCs.IoC<QueueThread>.Resolve("Queue").Start));
         }
 
-        //[TearDown]
+        [TearDown]
         public void Down()
         {
             //завершаем очередь
@@ -61,7 +61,7 @@ namespace WebServer.Tests
 
         }
         Task tokenServer;
-        //[OneTimeSetUp]
+        [OneTimeSetUp]
         public void InitTestSuite()
         {
             //запускаем сервер выдачи токенов
@@ -77,7 +77,7 @@ namespace WebServer.Tests
             HM2.IoCs.IoC<EndPointNetServer>.Resolve("Server").Run();
         }
 
-        //[OneTimeTearDown]
+        [OneTimeTearDown]
         public void FinishTestSuite()
         {
             //Завершаем игровой сервер
@@ -85,7 +85,7 @@ namespace WebServer.Tests
            // WebServer.Program.Dispose();
         }
 
-       // [Test]
+        [Test]
         public void AllAlgoritmPositivTest()
         {
             //формируем Http запрос серверу для получения идентификатора игры
@@ -148,7 +148,7 @@ namespace WebServer.Tests
             Assert.AreEqual(obj.CurrentVector.PositionNow.Y, 7.0);
         }
 
-      //  [Test]
+        [Test]
         public void InvalidTokenTest()
         {
             //формируем Http запрос серверу для получения идентификатора игры
